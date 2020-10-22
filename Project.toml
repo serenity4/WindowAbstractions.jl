@@ -3,11 +3,16 @@ uuid = "e18202ca-4a7d-4de8-b056-fa6bbd7de157"
 authors = ["Cédric Belmant"]
 version = "0.1.0"
 
+[deps]
+GeometryBasics = "5c1252a2-5f33-56bf-86c9-59e7332b4326"
+Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
+
 [compat]
 julia = "1.5"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+XCB = "16167f82-ea26-5cba-b1de-ed6fd5e30a10"
 
 [targets]
-test = ["Test"]
+test = ["Test", "XCB"]

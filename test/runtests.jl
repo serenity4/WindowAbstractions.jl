@@ -1,6 +1,7 @@
 using WindowAbstractions
 using Test
+using XCB
 
 @testset "WindowAbstractions.jl" begin
-    # Write your tests here.
+    
 end
