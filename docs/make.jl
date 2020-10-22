@@ -13,3 +13,7 @@ makedocs(;
     sitename="WindowAbstractions.jl",
     authors="serenity4 <cedric.bel@hotmail.fr>",
 )
+
+deploydocs(
+    repo = "github.com/serenity4/WindowAbstractions.jl.git",
+)
