@@ -1,0 +1,13 @@
+name = "WindowAbstractions"
+uuid = "e18202ca-4a7d-4de8-b056-fa6bbd7de157"
+authors = ["Cédric Belmant"]
+version = "0.1.0"
+
+[compat]
+julia = "1.5"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
