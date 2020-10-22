@@ -1,14 +1,18 @@
+abstract type WindowException <: Exception end
+
 """
 Signals that the window must be closed.
 """
-@with_kw struct CloseWindow <: Exception
-    msg::AbstractString = ""
+struct CloseWindow <: WindowException
+    window::AbstractWindow
+    msg::AbstractString
 end
 
-struct InvalidWindow <: Exception
+struct InvalidWindow <: WindowException
     window::AbstractWindow
     msg::AbstractString
 end
 InvalidWindow(window::AbstractWindow) = InvalidWindow(window, "")
+CloseWindow(window::AbstractWindow) = CloseWindow(window, "")
 
-Base.showerror(io::IO, e::InvalidWindow) = print(io, "InvalidWindow: ", e.msg)
+Base.showerror(io::IO, e::T) where {T <: WindowException} = print(io, string(T), isempty(e.msg) ? "" : ": $(e.msg)")

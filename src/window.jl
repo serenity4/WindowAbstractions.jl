@@ -16,7 +16,10 @@ set_extent(window::AbstractWindow, extent) = not_implemented_for(window)
 """
 Action to perform when an exception of type CloseWindow is raised.
 """
-on_close(window::AbstractWindow) = nothing
+function on_close(e::CloseWindow)
+    !isempty(e.msg) && @info(string("Closing window: ", e.msg))
+    terminate(e.window)
+end
 
 """
 Clean up window state upon destruction. The window cannot be assumed to be mapped or to be valid.
@@ -26,9 +29,9 @@ terminate(window::AbstractWindow) = not_implemented_for(window)
 """
 Action to perform when an exception of type InvalidWindow is raised.
 """
-function on_invalid(window::AbstractWindow, e::InvalidWindow)
+function on_invalid(e::InvalidWindow)
     @error("Invalid window detected", isempty(e) ? "" : ": $(e.msg)")
-    terminate!(window)
+    terminate(e.window)
 end
 
 """
