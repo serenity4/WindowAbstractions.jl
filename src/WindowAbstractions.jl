@@ -1,7 +1,6 @@
 module WindowAbstractions
 
-using GeometryBasics,
-   Parameters
+using Parameters
 
 include("utils.jl")
 include("types.jl")
