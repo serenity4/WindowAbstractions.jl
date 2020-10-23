@@ -1,11 +1,13 @@
 module WindowAbstractions
 
 using Parameters
+using GeometryBasics
+using Dates
 
 include("utils.jl")
 include("types.jl")
 include("exceptions.jl")
-include("input_devices.jl")
+include("inputs.jl")
 include("window.jl")
 include("events.jl")
 
