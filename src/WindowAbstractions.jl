@@ -2,6 +2,23 @@ module WindowAbstractions
 
 using Parameters
 using GeometryBasics
+using DocStringExtensions
+
+@template (FUNCTIONS, METHODS, MACROS) =
+    """
+    $(DOCSTRING)
+    $(TYPEDSIGNATURES)
+    """
+
+@template TYPES =
+    """
+    $(DOCSTRING)
+    $(TYPEDEF)
+    $(TYPEDSIGNATURES)
+    $(TYPEDFIELDS)
+    """
+
+
 # using Dates
 
 include("utils.jl")

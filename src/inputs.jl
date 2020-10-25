@@ -54,7 +54,7 @@ macro key_str(expr) esc(:(KeyCombination($(Meta.parse("\"$(escape_string(expr))\
 Base.Dict(event::MouseState) = Dict{Symbol, Bool}((k => getproperty(event, k)) for k ∈ fieldnames(MouseState))
 
 """
-Retrieve a list of pressed button symbols for the left, middle and right buttons from a `MouseState`.
+Retrieve a list of pressed button symbols for the left, middle and right buttons from a [`MouseState`](@ref).
 """
 function pressed_buttons(input::MouseState)
     inputs = filter(x -> x.second && x.first ∈ (:left, :middle, :right), Dict(input))

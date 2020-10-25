@@ -1,4 +1,4 @@
-# WindowAbstractions.jl
+# API
 
 ```@index
 ```

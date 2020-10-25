@@ -7,7 +7,7 @@ Window dimensions (width, height).
 extent(window::AbstractWindow) = not_implemented_for(window)
 
 """
-Get window DPI
+Get window DPI.
 """
 dpi(window::AbstractWindow) = not_implemented_for(window)
 
@@ -48,6 +48,6 @@ set_icon_title(window::AbstractWindow, icon_title) = not_implemented_for(window)
 
 attach_graphics_context!(window::AbstractWindow, ctx) = not_implemented_for(window)
 
-get_window_symbol(handler::AbstractWindowHandler, id) = not_implemented_for(handler)
+get_window_symbol(handler::AbstractWindowHandler, window) = not_implemented_for(handler)
 
 get_window(handler::AbstractWindowHandler, id) = not_implemented_for(handler)

@@ -2,9 +2,10 @@ using Documenter, WindowAbstractions
 
 makedocs(;
     modules=[WindowAbstractions],
-    format=Documenter.HTML(prettyurls = false),
+    format=Documenter.HTML(prettyurls = true),
     pages=[
         "Home" => "index.md",
+        "Introduction" => "intro.md",
         "API" => 
             "api.md"
         ,
