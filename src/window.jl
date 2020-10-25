@@ -1,3 +1,6 @@
+Base.broadcastable(window::AbstractWindow) = Ref(window)
+Base.broadcastable(handler::AbstractWindowHandler) = Ref(handler)
+
 """
 Window dimensions (width, height).
 """
@@ -14,25 +17,9 @@ Resize the window with `extent` reflecting the new (width, height).
 set_extent(window::AbstractWindow, extent) = not_implemented_for(window)
 
 """
-Action to perform when an exception of type CloseWindow is raised.
-"""
-function on_close(e::CloseWindow)
-    !isempty(e.msg) && @info(string("Closing window: ", e.msg))
-    terminate(e.window)
-end
-
-"""
 Clean up window state upon destruction. The window cannot be assumed to be mapped or to be valid.
 """
-terminate(window::AbstractWindow) = not_implemented_for(window)
-
-"""
-Action to perform when an exception of type InvalidWindow is raised.
-"""
-function on_invalid(e::InvalidWindow)
-    @error("Invalid window detected", isempty(e) ? "" : ": $(e.msg)")
-    terminate(e.window)
-end
+terminate_window!(handler::AbstractWindowHandler, window::AbstractWindow) = not_implemented_for(window)
 
 """
 Map a window to the screen.
@@ -57,6 +44,10 @@ set_icon(window::AbstractWindow, icon) = not_implemented_for(window)
 """
 Set window icon title.
 """
-set_icon_title(window::AbstractWindow, icon) = not_implemented_for(window)
+set_icon_title(window::AbstractWindow, icon_title) = not_implemented_for(window)
 
-attach_graphics_context(window::AbstractWindow, ctx) = not_implemented_for(window)
+attach_graphics_context!(window::AbstractWindow, ctx) = not_implemented_for(window)
+
+get_window_symbol(handler::AbstractWindowHandler, id) = not_implemented_for(handler)
+
+get_window(handler::AbstractWindowHandler, id) = not_implemented_for(handler)

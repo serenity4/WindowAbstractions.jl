@@ -1,7 +1,7 @@
 Base.show(io::IO, keyctx::KeyContext) = print(io, "num_lock=", keyctx.numlock, ", caps=", keyctx.caps)
 
 function KeyCombination(key_combination::AbstractString)
-    els = split(key_combination, "+")
+    els = split(lowercase(key_combination), "+")
     if endswith(last(els), r"f\d+")
         char_part = match(r"f\d+", pop!(els)).match
     else
@@ -37,9 +37,9 @@ end
 
 Base.show(io::IO, key::KeyCombination) = print(io, string(key))
 
-function Base.string(button::MouseEvent)
+function Base.string(button::MouseState)
     states = String[]
-    for field ∈ fieldnames(MouseEvent)
+    for field ∈ fieldnames(MouseState)
         push!(states, string(field) * "=$(getproperty(button, field))")
     end
     join(states, ", ")
@@ -51,4 +51,12 @@ The string must be a list of elements separated by '+' characters, with only one
 """
 macro key_str(expr) esc(:(KeyCombination($(Meta.parse("\"$(escape_string(expr))\""))))) end
 
-Base.Dict(event::MouseEvent) = Dict((string(k) => getproperty(event, k)) for k ∈ fieldnames(MouseEvent))
+Base.Dict(event::MouseState) = Dict{Symbol, Bool}((k => getproperty(event, k)) for k ∈ fieldnames(MouseState))
+
+"""
+Retrieve a list of pressed button symbols for the left, middle and right buttons from a `MouseState`.
+"""
+function pressed_buttons(input::MouseState)
+    inputs = filter(x -> x.second && x.first ∈ (:left, :middle, :right), Dict(input))
+    pressed_buttons = Set(keys(inputs))
+end
