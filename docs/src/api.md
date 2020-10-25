@@ -5,4 +5,5 @@
 
 ```@autodocs
 Modules = [WindowAbstractions]
+Private = false
 ```

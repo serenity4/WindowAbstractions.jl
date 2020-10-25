@@ -31,6 +31,7 @@ include("events.jl")
 
 export AbstractWindow,
        AbstractWindowHandler,
+       WindowException,
        InvalidWindow,
        CloseWindow,
 
@@ -93,6 +94,7 @@ export AbstractWindow,
        execute_callback,
 
        # Execution modes
+       ExecutionMode,
        Synchronous,
        Asynchronous,
 
