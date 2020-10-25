@@ -33,15 +33,15 @@ not_implemented_for_window_handler_exc = ErrorException("Not implemented for $ha
 end
 
 @testset "Callbacks" begin
-    @test execute_callback(cb, EventDetails(ExposeEvent(Point2(1, 1), 1), Point2(1, 1), 1.0, :fake_window, win)) == 1
-    @test execute_callback(cb, EventDetails(ResizeEvent(Point2(1, 1)), Point2(1, 1), 1.0, :fake_window, win)) == 2
-    @test execute_callback(cb, EventDetails(PointerMovesEvent(), Point2(1, 1), 1.0, :fake_window, win)) == 3
-    @test execute_callback(cb, EventDetails(PointerEntersWindowEvent(), Point2(1, 1), 1.0, :fake_window, win)) == 4
-    @test execute_callback(cb, EventDetails(PointerLeavesWindowEvent(), Point2(1, 1), 1.0, :fake_window, win)) == 5
-    @test execute_callback(cb, EventDetails(KeyEvent(key"ctrl+z", KeyPressed()), Point2(1, 1), 1.0, :fake_window, win)) == 6
-    @test execute_callback(cb, EventDetails(KeyEvent(key"ctrl+z", KeyReleased()), Point2(1, 1), 1.0, :fake_window, win)) == 7
-    @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonPressed()), Point2(1, 1), 1.0, :fake_window, win)) == 8
-    @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonReleased()), Point2(1, 1), 1.0, :fake_window, win)) == 9
+    @test execute_callback(cb, EventDetails(ExposeEvent(Point2(1, 1), 1), Point2(1, 1), 1.0, :fake_window, win, handler)) == 1
+    @test execute_callback(cb, EventDetails(ResizeEvent(Point2(1, 1)), Point2(1, 1), 1.0, :fake_window, win, handler)) == 2
+    @test execute_callback(cb, EventDetails(PointerMovesEvent(), Point2(1, 1), 1.0, :fake_window, win, handler)) == 3
+    @test execute_callback(cb, EventDetails(PointerEntersWindowEvent(), Point2(1, 1), 1.0, :fake_window, win, handler)) == 4
+    @test execute_callback(cb, EventDetails(PointerLeavesWindowEvent(), Point2(1, 1), 1.0, :fake_window, win, handler)) == 5
+    @test execute_callback(cb, EventDetails(KeyEvent(key"ctrl+z", KeyPressed()), Point2(1, 1), 1.0, :fake_window, win, handler)) == 6
+    @test execute_callback(cb, EventDetails(KeyEvent(key"ctrl+z", KeyReleased()), Point2(1, 1), 1.0, :fake_window, win, handler)) == 7
+    @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonPressed()), Point2(1, 1), 1.0, :fake_window, win, handler)) == 8
+    @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonReleased()), Point2(1, 1), 1.0, :fake_window, win, handler)) == 9
 end
 
 @testset "AbstractWindow Interface" begin
