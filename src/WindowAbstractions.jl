@@ -23,11 +23,13 @@ using DocStringExtensions
 
 include("utils.jl")
 include("types.jl")
+include("keys.jl")
 include("exceptions.jl")
 include("inputs.jl")
 include("window.jl")
 include("window_handler.jl")
 include("events.jl")
+
 
 export AbstractWindow,
        AbstractWindowHandler,
@@ -60,6 +62,10 @@ export AbstractWindow,
        KeyModifierState,
        KeyContext,
        KeyCombination,
+       no_input,
+       KeySymbol,
+       key_symbol,
+       is_key_defined,
 
        # Mouse
        MouseButton,

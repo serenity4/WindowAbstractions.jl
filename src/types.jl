@@ -46,8 +46,18 @@ struct PointerLeavesWindow <: PointerEvent end
 
 abstract type EventData end
 
+struct KeySymbol
+    name
+    symbol
+end
+KeySymbol(name) = KeySymbol(name, name)
+KeySymbol(symbol::Symbol) = is_key_defined(symbol) ? key_symbol(symbol) : KeySymbol(string(symbol))
+
 struct KeyEvent{A <: KeyAction} <: EventData
-    kc::KeyCombination
+    key_name::Symbol
+    key::KeySymbol
+    input::Char
+    modifiers::KeyModifierState
     action::A
 end
 

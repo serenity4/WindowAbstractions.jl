@@ -1,5 +1,6 @@
 Base.show(io::IO, keyctx::KeyContext) = print(io, "num_lock=", keyctx.numlock, ", caps=", keyctx.caps)
 
+KeyCombination(key::KeySymbol, modifiers::KeyModifierState) = KeyCombination(key.symbol, modifiers)
 function KeyCombination(key_combination::AbstractString)
     els = split(lowercase(key_combination), "+")
     if endswith(last(els), r"f\d+")
@@ -60,3 +61,5 @@ function pressed_buttons(input::MouseState)
     inputs = filter(x -> x.second && x.first ∈ (:left, :middle, :right), Dict(input))
     pressed_buttons = Set(keys(inputs))
 end
+
+const no_input = '\0'
