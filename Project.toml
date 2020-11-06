@@ -1,7 +1,7 @@
 name = "WindowAbstractions"
 uuid = "e18202ca-4a7d-4de8-b056-fa6bbd7de157"
 authors = ["Cédric Belmant"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
