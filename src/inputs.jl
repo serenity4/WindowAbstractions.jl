@@ -4,11 +4,11 @@ KeyCombination(key::KeySymbol, modifiers::KeyModifierState) = KeyCombination(key
 
 function KeyCombination(key_combination::AbstractString)
     els = split(lowercase(key_combination), "+")
-    fkey = match(last(els), r"f\d+$")
+    char_part = last(els)
+    fkey = match(r"f\d+$", char_part)
     if !isnothing(fkey)
-        char_part = fkey
+        char_part = fkey.match
     else
-        char_part = last(els)
         @assert length(char_part) == 1 "Character part $char_part of $key_combination must be a single character"
     end
     modifiers = els[1:end-1]
