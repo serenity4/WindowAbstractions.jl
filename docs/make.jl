@@ -6,6 +6,7 @@ makedocs(;
     pages=[
         "Home" => "index.md",
         "Introduction" => "intro.md",
+        "Input" => "input.md",
         "API" => 
             "api.md"
         ,
