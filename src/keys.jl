@@ -1,4 +1,4 @@
-const _keys = Dict((k => KeySymbol(string(k), v) for (k, v) ∈ Dict(
+const _keys = Dict((k => KeySymbol(k, v) for (k, v) ∈ [
             :shift_right     => "Shift (right)",
             :shift_left      => "Shift (left)",
             :control_right   => "Control (right)",
@@ -92,9 +92,9 @@ const _keys = Dict((k => KeySymbol(string(k), v) for (k, v) ∈ Dict(
             :currency        => "¤",
             :sterling        => "£",
             :eurosign        => "€",
-)))
+]))
 
-is_key_defined(key) = key ∈ keys(_keys)
+is_key_symbol_defined(key) = key ∈ keys(_keys)
 
 """
 Define an internal representation and a readable description for some key inputs.
@@ -102,6 +102,6 @@ Define an internal representation and a readable description for some key inputs
 The keys that are listed here are not exhaustive and only cover a very small subset of all possible keys.
 """
 key_symbol(name::Symbol) = _keys[name]
-key_symbol(name) = key_symbol(Symbol(name))
+key_symbol(name::AbstractString) = key_symbol(Symbol(name))
 
 Base.show(io::IO, key::KeySymbol) = print(io, key.symbol)
