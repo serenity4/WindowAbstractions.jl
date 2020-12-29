@@ -104,4 +104,4 @@ The keys that are listed here are not exhaustive and only cover a very small sub
 key_symbol(name::Symbol) = _keys[name]
 key_symbol(name) = key_symbol(Symbol(name))
 
-Base.print(io::IO, key::KeySymbol) = print(io, key.symbol)
+Base.show(io::IO, key::KeySymbol) = print(io, key.symbol)

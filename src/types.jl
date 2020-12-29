@@ -9,7 +9,7 @@ Abstract window type.
 abstract type AbstractWindow end
 
 "Provide information about key modifier state (shift, control, alt and the OS key)."
-@with_kw struct KeyModifierState
+@with_kw_noshow struct KeyModifierState
     shift::Bool = false
     ctrl::Bool = false
     alt::Bool = false
@@ -71,7 +71,7 @@ struct ButtonScrollDown <: MouseButton end
 """
 Store mouse input events, including clicking buttons and scrolling.
 """
-@with_kw struct MouseState
+@with_kw_noshow struct MouseState
     left::Bool = false
     middle::Bool = false
     right::Bool = false

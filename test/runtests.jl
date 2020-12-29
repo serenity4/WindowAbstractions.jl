@@ -3,6 +3,7 @@ using WindowAbstractions: Point2
 using Test
 
 MouseEvent(ButtonLeft(), MouseState(), ButtonPressed())
+
 cb = WindowCallbacks(
     on_expose=(details) -> 1,
     on_resize=(details) -> 2,
@@ -17,8 +18,10 @@ cb = WindowCallbacks(
 
 struct FakeWindow <: AbstractWindow end
 struct FakeWindowHandler <: AbstractWindowHandler end
+
 win = FakeWindow()
 handler = FakeWindowHandler()
+
 not_implemented_for_window_exc = ErrorException("Not implemented for $win")
 not_implemented_for_window_handler_exc = ErrorException("Not implemented for $handler")
 

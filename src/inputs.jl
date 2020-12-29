@@ -1,15 +1,18 @@
 Base.show(io::IO, keyctx::KeyContext) = print(io, "num_lock=", keyctx.numlock, ", caps=", keyctx.caps)
 
 KeyCombination(key::KeySymbol, modifiers::KeyModifierState) = KeyCombination(key.symbol, modifiers)
+
 function KeyCombination(key_combination::AbstractString)
     els = split(lowercase(key_combination), "+")
-    if endswith(last(els), r"f\d+")
-        char_part = match(r"f\d+", pop!(els)).match
+    fkey = match(last(els), r"f\d+$")
+    if !isnothing(fkey)
+        char_part = fkey
     else
-        char_part = pop!(els)
+        char_part = last(els)
         @assert length(char_part) == 1 "Character part $char_part of $key_combination must be a single character"
     end
-    KeyCombination(char_part, KeyModifierState(; zip(Symbol.(els), [true for _ ∈ els])...))
+    modifiers = els[1:end-1]
+    KeyCombination(char_part, KeyModifierState(; map(x -> (Symbol(x), true), modifiers)...))
 end
 
 const fkeys = Dict(
@@ -27,21 +30,19 @@ const fkeys = Dict(
     '\uffc9' => "f12",
 )
 
-function Base.string(key::KeyCombination)
+function Base.show(io::IO, key::KeyCombination)
     states = String[]
     for field ∈ reverse(fieldnames(KeyModifierState))
         getproperty(key.state, field) ? push!(states, string(field)) : nothing
     end
     push!(states, key.key)
-    join(states, "+")
+    print(io, join(states, '+'))
 end
 
-Base.show(io::IO, key::KeyCombination) = print(io, string(key))
-
-function Base.string(button::MouseState)
+function Base.show(io::IO, button::MouseState)
     states = String[]
     for field ∈ fieldnames(MouseState)
-        push!(states, string(field) * "=$(getproperty(button, field))")
+        push!(states, string(field, '=', getproperty(button, field)))
     end
     join(states, ", ")
 end
