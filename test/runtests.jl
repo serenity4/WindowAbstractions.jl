@@ -18,7 +18,7 @@ cb = WindowCallbacks(
 
 struct FakeWindow <: AbstractWindow end
 struct FakeWindowHandler <: AbstractWindowHandler end
-
+>
 win = FakeWindow()
 handler = FakeWindowHandler()
 
@@ -42,8 +42,8 @@ not_implemented_for_window_handler_exc = ErrorException("Not implemented for $ha
         @test execute_callback(cb, EventDetails(PointerMovesEvent(), Point2(1, 1), 1.0, :fake_window, win, handler)) == 3
         @test execute_callback(cb, EventDetails(PointerEntersWindowEvent(), Point2(1, 1), 1.0, :fake_window, win, handler)) == 4
         @test execute_callback(cb, EventDetails(PointerLeavesWindowEvent(), Point2(1, 1), 1.0, :fake_window, win, handler)) == 5
-        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol("z"), 'z', KeyModifierState(ctrl=true), KeyPressed()), Point2(1, 1), 1.0, :fake_window, win, handler)) == 6
-        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol("z"), 'z', KeyModifierState(ctrl=true), KeyReleased()), Point2(1, 1), 1.0, :fake_window, win, handler)) == 7
+        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyPressed()), Point2(1, 1), 1.0, :fake_window, win, handler)) == 6
+        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyReleased()), Point2(1, 1), 1.0, :fake_window, win, handler)) == 7
         @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonPressed()), Point2(1, 1), 1.0, :fake_window, win, handler)) == 8
         @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonReleased()), Point2(1, 1), 1.0, :fake_window, win, handler)) == 9
     end
