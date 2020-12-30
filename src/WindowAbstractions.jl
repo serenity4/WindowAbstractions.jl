@@ -52,7 +52,9 @@ export
         PointerMoves,
         PointerEntersWindow,
         PointerLeavesWindow,
+        Resize,
         ResizeEvent,
+        Expose,
         ExposeEvent,
         PointerEntersWindowEvent,
         PointerLeavesWindowEvent,
@@ -98,6 +100,7 @@ export
         EventLoop,
         EventDetails,
         execute_callback,
+        action,
 
         # Execution modes
         ExecutionMode,
