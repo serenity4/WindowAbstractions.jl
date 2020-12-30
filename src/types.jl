@@ -98,11 +98,11 @@ struct MouseEvent{A <: MouseAction, B <: MouseButton} <: EventData
 end
 
 struct ResizeEvent <: EventData
-    new_dimensions::Point2{Int}
+    new_dimensions::Tuple{Int,Int}
 end
 
 struct ExposeEvent <: EventData
-    exposed_dimensions::Point2{Int}
+    exposed_dimensions::Tuple{Int,Int}
     count::Int
 end
 
@@ -122,7 +122,7 @@ Generic event structure holding data as an `EventData` member.
 """
 struct EventDetails{T <: EventData, W <: AbstractWindow, F <: AbstractFloat, WH <: AbstractWindowHandler}
     data::T
-    location::Point2{Int}
+    location::Tuple{Int,Int}
     time::F
     window_symbol::Symbol
     window::W

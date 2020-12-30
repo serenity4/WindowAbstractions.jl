@@ -1,7 +1,6 @@
 module WindowAbstractions
 
 using Parameters
-using GeometryBasics
 using DocStringExtensions
 
 @template (FUNCTIONS, METHODS, MACROS) =

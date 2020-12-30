@@ -1,6 +1,3 @@
-EventDetails(data, location::Tuple, time, window_symbol, window, window_handler) =
-    EventDetails(data, Point2(location...), time, window_symbol, window, window_handler)
-
 function default_on_invalid(e::InvalidWindow)
     @error("Window $(get_window_symbol(e.handler, e.window)) detected as invalid" * (isempty(e.msg) ? "" : ": $(e.msg)"))
     terminate_window!(e.handler, e.window)
