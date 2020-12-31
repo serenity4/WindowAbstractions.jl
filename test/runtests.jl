@@ -36,15 +36,15 @@ not_implemented_for_window_handler_exc = ErrorException("Not implemented for $wh
     end
 
     @testset "Callbacks" begin
-        @test execute_callback(cb, EventDetails(ExposeEvent((1, 1), 1), (1, 1), 1.0, win, wh)) == 1
-        @test execute_callback(cb, EventDetails(ResizeEvent((1, 1)), (1, 1), 1.0, win, wh)) == 2
-        @test execute_callback(cb, EventDetails(PointerMovesEvent(), (1, 1), 1.0, win, wh)) == 3
-        @test execute_callback(cb, EventDetails(PointerEntersWindowEvent(), (1, 1), 1.0, win, wh)) == 4
-        @test execute_callback(cb, EventDetails(PointerLeavesWindowEvent(), (1, 1), 1.0, win, wh)) == 5
-        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyPressed()), (1, 1), 1.0, win, wh)) == 6
-        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyReleased()), (1, 1), 1.0, win, wh)) == 7
-        @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonPressed()), (1, 1), 1.0, win, wh)) == 8
-        @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonReleased()), (1, 1), 1.0, win, wh)) == 9
+        @test execute_callback(cb, EventDetails(ExposeEvent((1, 1), 1), (1, 1), 1.0, win)) == 1
+        @test execute_callback(cb, EventDetails(ResizeEvent((1, 1)), (1, 1), 1.0, win)) == 2
+        @test execute_callback(cb, EventDetails(PointerMovesEvent(), (1, 1), 1.0, win)) == 3
+        @test execute_callback(cb, EventDetails(PointerEntersWindowEvent(), (1, 1), 1.0, win)) == 4
+        @test execute_callback(cb, EventDetails(PointerLeavesWindowEvent(), (1, 1), 1.0, win)) == 5
+        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyPressed()), (1, 1), 1.0, win)) == 6
+        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyReleased()), (1, 1), 1.0, win)) == 7
+        @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonPressed()), (1, 1), 1.0, win)) == 8
+        @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonReleased()), (1, 1), 1.0, win)) == 9
     end
 
     @testset "AbstractWindow Interface" begin
