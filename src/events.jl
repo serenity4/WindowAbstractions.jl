@@ -1,11 +1,11 @@
-function default_on_invalid(e::InvalidWindow)
+function default_on_invalid(wh::AbstractWindowHandler, e::InvalidWindow)
     @error("Window $(e.win) detected as invalid" * (isempty(e.msg) ? "" : ": $(e.msg)"))
-    terminate_window!(e.wh, e.win)
+    terminate_window!(wh, e.win)
 end
 
-function default_on_close(e::CloseWindow)
+function default_on_close(wh::AbstractWindowHandler, e::CloseWindow)
     !isempty(e.msg) && @info(string("Closing window $(e.win)" * (isempty(e.msg) ? "" : ": $(e.msg)")))
-    terminate_window!(e.wh, e.win)
+    terminate_window!(wh, e.win)
 end
 
 Base.run(W::AbstractWindowHandler, ::Synchronous; kwargs...) = not_implemented_for(W)
@@ -20,5 +20,3 @@ execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{ExposeE
 execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{PointerEntersWindowEvent}; kwargs...) = callbacks.on_pointer_enter(event_details; kwargs...)
 execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{PointerLeavesWindowEvent}; kwargs...) = callbacks.on_pointer_leave(event_details; kwargs...)
 execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{PointerMovesEvent}; kwargs...) = callbacks.on_pointer_move(event_details; kwargs...)
-execute_callback(callbacks::WindowCallbacks, exception::CloseWindow; kwargs...) = callbacks.on_close(exception; kwargs...)
-execute_callback(callbacks::WindowCallbacks, exception::InvalidWindow; kwargs...) = callbacks.on_invalid(exception; kwargs...)
