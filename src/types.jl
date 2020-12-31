@@ -124,7 +124,6 @@ struct EventDetails{T <: EventData, W <: AbstractWindow, F <: AbstractFloat, WH 
     data::T
     location::Tuple{Int,Int}
     time::F
-    window_symbol::Symbol
     window::W
     window_handler::WH
 end
@@ -217,30 +216,6 @@ Base.@kwdef struct WindowCallbacks
     A window was exposed to the screen; either right after creation, or when it was previously hidden and then visible again.
     """
     on_expose::Function                = event::EventDetails -> nothing
-end
-
-"""
-Event loop attached to a window handler, executing callbacks upon looping and/or receiving window events.
-
-Typically, real-time render operations should be registered as callbacks in either of `on_iter_first` or `on_iter_last`.
-"""
-Base.@kwdef mutable struct EventLoop{W <: AbstractWindowHandler}
-    """
-    Window handler with which to handle window events.
-    """
-    window_handler::W
-    """
-    Set of callbacks for each window, designated by the same symbol that is used for the `window_handler`. See [`get_window_symbol`](@ref).
-    """
-    callbacks::Dict{Symbol, WindowCallbacks}
-    """
-    First action executed inside the loop, before polling for window events.
-    """
-    on_iter_first::Function = () -> nothing
-    """
-    Last action executed inside the loop, after polling and processing of window events.
-    """
-    on_iter_last::Function = () -> nothing
 end
 
 """
