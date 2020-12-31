@@ -11,12 +11,21 @@ end
 Base.run(W::AbstractWindowHandler, ::Synchronous; kwargs...) = not_implemented_for(W)
 Base.run(W::AbstractWindowHandler, ::Asynchronous; kwargs...) = not_implemented_for(W)
 
-execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{ResizeEvent}; kwargs...) = callbacks.on_resize(event_details; kwargs...)
-execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{<:MouseEvent{ButtonPressed}}; kwargs...) = callbacks.on_mouse_button_pressed(event_details; kwargs...)
-execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{<:MouseEvent{ButtonReleased}}; kwargs...) = callbacks.on_mouse_button_released(event_details; kwargs...)
-execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{KeyEvent{KeyPressed}}; kwargs...) = callbacks.on_key_pressed(event_details; kwargs...)
-execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{KeyEvent{KeyReleased}}; kwargs...) = callbacks.on_key_released(event_details; kwargs...)
-execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{ExposeEvent}; kwargs...) = callbacks.on_expose(event_details; kwargs...)
-execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{PointerEntersWindowEvent}; kwargs...) = callbacks.on_pointer_enter(event_details; kwargs...)
-execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{PointerLeavesWindowEvent}; kwargs...) = callbacks.on_pointer_leave(event_details; kwargs...)
-execute_callback(callbacks::WindowCallbacks, event_details::EventDetails{PointerMovesEvent}; kwargs...) = callbacks.on_pointer_move(event_details; kwargs...)
+callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{ResizeEvent}}) = callbacks.on_resize
+callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{<:MouseEvent{ButtonPressed}}}) = callbacks.on_mouse_button_pressed
+callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{<:MouseEvent{ButtonReleased}}}) = callbacks.on_mouse_button_released
+callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{KeyEvent{KeyPressed}}}) = callbacks.on_key_pressed
+callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{KeyEvent{KeyReleased}}}) = callbacks.on_key_released
+callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{ExposeEvent}}) = callbacks.on_expose
+callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{PointerEntersWindowEvent}}) = callbacks.on_pointer_enter
+callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{PointerLeavesWindowEvent}}) = callbacks.on_pointer_leave
+callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{PointerMovesEvent}}) = callbacks.on_pointer_move
+
+function execute_callback(callbacks::WindowCallbacks, event_details::EventDetails; kwargs...)
+    cb = callback(callbacks, typeof(event_details))
+    if !isnothing(cb)
+        cb(event_details; kwargs...)
+    else
+        nothing
+    end
+end

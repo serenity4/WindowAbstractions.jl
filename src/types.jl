@@ -172,47 +172,47 @@ Base.@kwdef struct WindowCallbacks
     """
     The window is closing normally upon raising an exception of type [`CloseWindow`](@ref).
     """
-    on_close::Function                 = default_on_close
+    on_close                 = default_on_close
     """
     The window is detected as invalid (for example, when closed externally) through an exception of type [`InvalidWindow`](@ref).
     """
-    on_invalid::Function               = default_on_invalid
+    on_invalid               = default_on_invalid
     """
     The window was resized.
     """
-    on_resize::Function                = event::EventDetails -> nothing
+    on_resize                = nothing
     """
     A mouse button was pressed.
     """
-    on_mouse_button_pressed::Function  = event::EventDetails -> nothing
+    on_mouse_button_pressed  = nothing
     """
     A mouse button was released.
     """
-    on_mouse_button_released::Function = event::EventDetails -> nothing
+    on_mouse_button_released = nothing
     """
     The pointer moves in the window.
     """
-    on_pointer_move::Function          = event::EventDetails -> nothing
+    on_pointer_move          = nothing
     """
     The pointer enters the window area.
     """
-    on_pointer_enter::Function         = event::EventDetails -> nothing
+    on_pointer_enter         = nothing
     """
     The pointer leaves the window area.
     """
-    on_pointer_leave::Function         = event::EventDetails -> nothing
+    on_pointer_leave         = nothing
     """
     A key was pressed. Note that some key combinations can be reserved by the OS, so they don't trigger the corresponding event. On Ubuntu 20.04, this is for example the case with some combinations of the form alt+fkey such as alt+f4.
     """
-    on_key_pressed::Function           = event::EventDetails -> nothing
+    on_key_pressed           = nothing
     """
     A key was released.
     """
-    on_key_released::Function          = event::EventDetails -> nothing
+    on_key_released          = nothing
     """
     A window was exposed to the screen; either right after creation, or when it was previously hidden and then visible again.
     """
-    on_expose::Function                = event::EventDetails -> nothing
+    on_expose                = nothing
 end
 
 """
