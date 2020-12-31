@@ -124,8 +124,8 @@ struct EventDetails{T <: EventData, W <: AbstractWindow, F <: AbstractFloat, WH 
     data::T
     location::Tuple{Int,Int}
     time::F
-    window::W
-    window_handler::WH
+    win::W
+    wh::WH
 end
 
 action(event::EventDetails) = action(event.data)
@@ -148,8 +148,8 @@ abstract type WindowException <: Exception end
 Signals that the window must be closed.
 """
 struct CloseWindow <: WindowException
-    handler::AbstractWindowHandler
-    window::AbstractWindow
+    wh::AbstractWindowHandler
+    win::AbstractWindow
     msg::AbstractString
 end
 
@@ -159,8 +159,8 @@ The conditions for tagging a window as invalid depend on the windowing API used.
 Windows that are tagged invalid should be terminated.
 """
 struct InvalidWindow <: WindowException
-    handler::AbstractWindowHandler
-    window::AbstractWindow
+    wh::AbstractWindowHandler
+    win::AbstractWindow
     msg::AbstractString
 end
 

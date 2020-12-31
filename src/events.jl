@@ -1,11 +1,11 @@
 function default_on_invalid(e::InvalidWindow)
-    @error("Window $(e.window) detected as invalid" * (isempty(e.msg) ? "" : ": $(e.msg)"))
-    terminate_window!(e.handler, e.window)
+    @error("Window $(e.win) detected as invalid" * (isempty(e.msg) ? "" : ": $(e.msg)"))
+    terminate_window!(e.wh, e.win)
 end
 
 function default_on_close(e::CloseWindow)
-    !isempty(e.msg) && @info(string("Closing window $(e.window)" * (isempty(e.msg) ? "" : ": $(e.msg)")))
-    terminate_window!(e.handler, e.window)
+    !isempty(e.msg) && @info(string("Closing window $(e.win)" * (isempty(e.msg) ? "" : ": $(e.msg)")))
+    terminate_window!(e.wh, e.win)
 end
 
 Base.run(W::AbstractWindowHandler, ::Synchronous; kwargs...) = not_implemented_for(W)

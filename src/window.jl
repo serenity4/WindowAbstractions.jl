@@ -1,53 +1,55 @@
-Base.broadcastable(window::AbstractWindow) = Ref(window)
-Base.broadcastable(handler::AbstractWindowHandler) = Ref(handler)
+Base.broadcastable(win::AbstractWindow) = Ref(win)
+Base.broadcastable(wh::AbstractWindowHandler) = Ref(wh)
 
 """
 Window dimensions (width, height).
 """
-extent(window::AbstractWindow) = not_implemented_for(window)
+extent(win::AbstractWindow) = not_implemented_for(win)
 
 """
 Get window DPI.
 """
-dpi(window::AbstractWindow) = not_implemented_for(window)
+dpi(win::AbstractWindow) = not_implemented_for(win)
 
 """
 Resize the window with `extent` reflecting the new (width, height).
 """
-set_extent(window::AbstractWindow, extent) = not_implemented_for(window)
+set_extent(win::AbstractWindow, extent) = not_implemented_for(win)
 
 """
 Clean up window state upon destruction. The window cannot be assumed to be mapped or to be valid.
 """
-terminate_window!(handler::AbstractWindowHandler, window::AbstractWindow) = not_implemented_for(window)
+terminate_window!(wh::AbstractWindowHandler, win::AbstractWindow) = not_implemented_for(win)
 
 """
 Map a window to the screen.
 """
-map_window(window::AbstractWindow) = not_implemented_for(window)
+map_window(win::AbstractWindow) = not_implemented_for(win)
 
 """
 Unmap a window from the screen.
 """
-unmap_window(window::AbstractWindow) = not_implemented_for(window)
+unmap_window(win::AbstractWindow) = not_implemented_for(win)
 
 """
 Set window title.
 """
-set_title(window::AbstractWindow, title) = not_implemented_for(window)
+set_title(win::AbstractWindow, title) = not_implemented_for(win)
 
 """
 Set window icon.
 """
-set_icon(window::AbstractWindow, icon) = not_implemented_for(window)
+set_icon(win::AbstractWindow, icon) = not_implemented_for(win)
 
 """
 Set window icon title.
 """
-set_icon_title(window::AbstractWindow, icon_title) = not_implemented_for(window)
+set_icon_title(win::AbstractWindow, icon_title) = not_implemented_for(win)
 
-attach_graphics_context!(window::AbstractWindow, ctx) = not_implemented_for(window)
+attach_graphics_context!(win::AbstractWindow, ctx) = not_implemented_for(win)
 
-get_window_symbol(handler::AbstractWindowHandler, window) = not_implemented_for(handler)
+get_window_symbol(wh::AbstractWindowHandler, win) = not_implemented_for(wh)
 
-get_window(handler::AbstractWindowHandler, id) = not_implemented_for(handler)
+get_window(wh::AbstractWindowHandler, id) = not_implemented_for(wh)
+
+callbacks(wh::AbstractWindowHandler, id) = not_implemented_for(wh)

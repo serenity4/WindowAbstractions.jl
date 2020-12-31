@@ -19,10 +19,10 @@ struct FakeWindow <: AbstractWindow end
 struct FakeWindowHandler <: AbstractWindowHandler end
 
 win = FakeWindow()
-handler = FakeWindowHandler()
+wh = FakeWindowHandler()
 
 not_implemented_for_window_exc = ErrorException("Not implemented for $win")
-not_implemented_for_window_handler_exc = ErrorException("Not implemented for $handler")
+not_implemented_for_window_handler_exc = ErrorException("Not implemented for $wh")
 
 @testset "WindowAbstractions.jl" begin
     @testset "Key Combinations" begin
@@ -36,32 +36,32 @@ not_implemented_for_window_handler_exc = ErrorException("Not implemented for $ha
     end
 
     @testset "Callbacks" begin
-        @test execute_callback(cb, EventDetails(ExposeEvent((1, 1), 1), (1, 1), 1.0, win, handler)) == 1
-        @test execute_callback(cb, EventDetails(ResizeEvent((1, 1)), (1, 1), 1.0, win, handler)) == 2
-        @test execute_callback(cb, EventDetails(PointerMovesEvent(), (1, 1), 1.0, win, handler)) == 3
-        @test execute_callback(cb, EventDetails(PointerEntersWindowEvent(), (1, 1), 1.0, win, handler)) == 4
-        @test execute_callback(cb, EventDetails(PointerLeavesWindowEvent(), (1, 1), 1.0, win, handler)) == 5
-        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyPressed()), (1, 1), 1.0, win, handler)) == 6
-        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyReleased()), (1, 1), 1.0, win, handler)) == 7
-        @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonPressed()), (1, 1), 1.0, win, handler)) == 8
-        @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonReleased()), (1, 1), 1.0, win, handler)) == 9
+        @test execute_callback(cb, EventDetails(ExposeEvent((1, 1), 1), (1, 1), 1.0, win, wh)) == 1
+        @test execute_callback(cb, EventDetails(ResizeEvent((1, 1)), (1, 1), 1.0, win, wh)) == 2
+        @test execute_callback(cb, EventDetails(PointerMovesEvent(), (1, 1), 1.0, win, wh)) == 3
+        @test execute_callback(cb, EventDetails(PointerEntersWindowEvent(), (1, 1), 1.0, win, wh)) == 4
+        @test execute_callback(cb, EventDetails(PointerLeavesWindowEvent(), (1, 1), 1.0, win, wh)) == 5
+        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyPressed()), (1, 1), 1.0, win, wh)) == 6
+        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyReleased()), (1, 1), 1.0, win, wh)) == 7
+        @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonPressed()), (1, 1), 1.0, win, wh)) == 8
+        @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonReleased()), (1, 1), 1.0, win, wh)) == 9
     end
 
     @testset "AbstractWindow Interface" begin
         @test_throws not_implemented_for_window_exc extent(win)
         @test_throws not_implemented_for_window_exc dpi(win)
         @test_throws not_implemented_for_window_exc set_extent(win, (1, 1))
-        @test_throws not_implemented_for_window_exc terminate_window!(handler, win)
+        @test_throws not_implemented_for_window_exc terminate_window!(wh, win)
         @test_throws not_implemented_for_window_exc map_window(win)
         @test_throws not_implemented_for_window_exc unmap_window(win)
         @test_throws not_implemented_for_window_exc set_title(win, "title")
         @test_throws not_implemented_for_window_exc set_icon(win, nothing)
         @test_throws not_implemented_for_window_exc set_icon_title(win, "icon_title")
         @test_throws not_implemented_for_window_exc attach_graphics_context!(win, nothing)
-        @test_throws not_implemented_for_window_handler_exc get_window(handler, nothing)
-        @test_throws not_implemented_for_window_handler_exc get_window_symbol(handler, nothing)
-        @test_throws not_implemented_for_window_handler_exc wait_for_event(handler)
-        @test_throws not_implemented_for_window_handler_exc poll_for_event(handler)
+        @test_throws not_implemented_for_window_handler_exc get_window(wh, nothing)
+        @test_throws not_implemented_for_window_handler_exc get_window_symbol(wh, nothing)
+        @test_throws not_implemented_for_window_handler_exc wait_for_event(wh)
+        @test_throws not_implemented_for_window_handler_exc poll_for_event(wh)
     end
 end
 
