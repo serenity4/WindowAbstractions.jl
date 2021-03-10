@@ -64,11 +64,29 @@ end
 
 KeySymbol(symbol::Symbol) = is_key_symbol_defined(symbol) ? key_symbol(symbol) : KeySymbol(symbol, string(symbol))
 
+"""
+Event data regarding a keystroke.
+"""
 struct KeyEvent{A <: KeyAction} <: EventData
+    """
+    The name of the physical key.
+    """
     key_name::Symbol
+    """
+    The symbol associated to the keystroke.
+    """
     key::KeySymbol
+    """
+    Printable input (can be the empty string).
+    """
     input::Char
+    """
+    Modifier state.
+    """
     modifiers::KeyModifierState
+    """
+    Action, representing whether the key was pressed or released.
+    """
     action::A
 end
 
@@ -216,7 +234,7 @@ Base.@kwdef struct WindowCallbacks
 end
 
 """
-Abstract execution mode. Is only used for controlling [`EventLoop`](@ref) execution at the moment.
+Abstract execution mode. Controls the execution of the event loop attached to a [`AbstractWindowHandler`](@ref)
 """
 abstract type ExecutionMode end
 

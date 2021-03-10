@@ -8,7 +8,18 @@ function default_on_close(wh::AbstractWindowHandler, e::CloseWindow)
     terminate_window!(wh, e.win)
 end
 
+"""
+    run(window_handler, Synchronous(); kwargs...)
+
+Run an event loop associated with the `window_handler` in a synchronous fashion.
+"""
 Base.run(W::AbstractWindowHandler, ::Synchronous; kwargs...) = not_implemented_for(W)
+
+"""
+    run(window_handler, Asynchronous(); kwargs...)
+
+Run an event loop associated with the `window_handler` in an asynchronous fashion.
+"""
 Base.run(W::AbstractWindowHandler, ::Asynchronous; kwargs...) = not_implemented_for(W)
 
 callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{ResizeEvent}}) = callbacks.on_resize

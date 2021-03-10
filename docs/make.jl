@@ -6,6 +6,8 @@ makedocs(;
     pages=[
         "Home" => "index.md",
         "Introduction" => "intro.md",
+        "Windows" => "windows.md",
+        "Events" => "events.md",
         "Input" => "input.md",
         "API" => 
             "api.md"
