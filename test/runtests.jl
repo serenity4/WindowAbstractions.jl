@@ -1,8 +1,6 @@
 using WindowAbstractions
 using Test
 
-MouseEvent(ButtonLeft(), MouseState(), ButtonPressed())
-
 cb = WindowCallbacks(
     on_expose=(details) -> 1,
     on_resize=(details) -> 2,
@@ -64,5 +62,3 @@ not_implemented_for_window_handler_exc = ErrorException("Not implemented for $wh
         @test_throws not_implemented_for_window_handler_exc poll_for_event(wh)
     end
 end
-
-
