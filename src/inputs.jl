@@ -44,7 +44,7 @@ function Base.show(io::IO, button::MouseState)
     for field ∈ fieldnames(MouseState)
         push!(states, string(field, '=', getproperty(button, field)))
     end
-    join(states, ", ")
+    print(io, join(states, ", "))
 end
 
 """
