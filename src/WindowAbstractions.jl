@@ -1,6 +1,5 @@
 module WindowAbstractions
 
-using Parameters
 using DocStringExtensions
 
 @template (FUNCTIONS, METHODS, MACROS) =

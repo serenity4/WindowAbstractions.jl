@@ -9,7 +9,7 @@ Abstract window type.
 abstract type AbstractWindow end
 
 "Provide information about key modifier state (shift, control, alt and the OS key)."
-@with_kw_noshow struct KeyModifierState
+Base.@kwdef struct KeyModifierState
     shift::Bool = false
     ctrl::Bool = false
     alt::Bool = false
@@ -100,7 +100,7 @@ struct ButtonScrollDown <: MouseButton end
 """
 Store mouse input events, including clicking buttons and scrolling.
 """
-@with_kw_noshow struct MouseState
+Base.@kwdef struct MouseState
     left::Bool = false
     middle::Bool = false
     right::Bool = false
@@ -180,13 +180,20 @@ struct InvalidWindow <: WindowException
 end
 
 """
+Abstract type for callback structures.
+Callback structures should possess function fields
+with names coherent with the corresponding callback type.
+"""
+abstract type Callbacks end
+
+"""
 Set of common window callbacks, in response to specific window events.
 
 The callbacks `on_close` and `on_invalid` take respectively a [`CloseWindow`](@ref) and an [`InvalidWindow`](@ref) as argument, while other callbacks take an [`EventDetails`](@ref) as argument parametrized according to the event.
 
 Each field documents when and in which context the callback may be called.
 """
-Base.@kwdef struct WindowCallbacks
+Base.@kwdef struct WindowCallbacks <: Callbacks
     """
     The window is closing normally upon raising an exception of type [`CloseWindow`](@ref).
     """
