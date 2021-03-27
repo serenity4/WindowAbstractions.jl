@@ -19,7 +19,7 @@ set_extent(win::AbstractWindow, extent) = not_implemented_for(win)
 """
 Clean up window state upon destruction. The window cannot be assumed to be mapped or to be valid.
 """
-terminate_window!(wh::AbstractWindowHandler, win::AbstractWindow) = not_implemented_for(win)
+terminate_window!(wh::AbstractWindowHandler, win::AbstractWindow) = not_implemented_for(wh)
 
 """
 Map a window to the screen.
