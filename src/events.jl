@@ -1,11 +1,31 @@
-function default_on_invalid(wh::AbstractWindowHandler, e::InvalidWindow)
-    @error("Window $(e.win) detected as invalid" * (isempty(e.msg) ? "" : ": $(e.msg)"))
-    terminate_window!(wh, e.win)
-end
+action(::Type{PointerMovesEvent}) = PointerMoves
+action(::Type{PointerLeavesWindowEvent}) = PointerLeavesWindow
+action(::Type{PointerEntersWindowEvent}) = PointerEntersWindow
+action(::Type{ExposeEvent}) = Expose
+action(::Type{ResizeEvent}) = Resize
+action(::Type{<:MouseEvent{A}}) where {A} = A
+action(::Type{<:KeyEvent{A}}) where {A} = A
+action(::Type{<:EventDetails{T}}) where {T} = action(T)
 
-function default_on_close(wh::AbstractWindowHandler, e::CloseWindow)
-    !isempty(e.msg) && @info(string("Closing window $(e.win)" * (isempty(e.msg) ? "" : ": $(e.msg)")))
-    terminate_window!(wh, e.win)
+callback_symbol(::Type{Resize}) = :on_resize
+callback_symbol(::Type{ButtonPressed}) = :on_mouse_button_pressed
+callback_symbol(::Type{ButtonReleased}) = :on_mouse_button_released
+callback_symbol(::Type{KeyPressed}) = :on_key_pressed
+callback_symbol(::Type{KeyReleased}) = :on_key_released
+callback_symbol(::Type{Expose}) = :on_expose
+callback_symbol(::Type{PointerEntersWindow}) = :on_pointer_enter
+callback_symbol(::Type{PointerLeavesWindow}) = :on_pointer_leave
+callback_symbol(::Type{PointerMoves}) = :on_pointer_move
+
+callback(callbacks::Callbacks, T) = getproperty(callbacks, callback_symbol(action(T)))
+
+function execute_callback(callbacks::Callbacks, event_details; kwargs...)
+    cb = callback(callbacks, typeof(event_details))
+    if !isnothing(cb)
+        cb(event_details; kwargs...)
+    else
+        nothing
+    end
 end
 
 """
@@ -21,22 +41,3 @@ Base.run(W::AbstractWindowHandler, ::Synchronous; kwargs...) = not_implemented_f
 Run an event loop associated with the `window_handler` in an asynchronous fashion.
 """
 Base.run(W::AbstractWindowHandler, ::Asynchronous; kwargs...) = not_implemented_for(W)
-
-callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{ResizeEvent}}) = callbacks.on_resize
-callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{<:MouseEvent{ButtonPressed}}}) = callbacks.on_mouse_button_pressed
-callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{<:MouseEvent{ButtonReleased}}}) = callbacks.on_mouse_button_released
-callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{KeyEvent{KeyPressed}}}) = callbacks.on_key_pressed
-callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{KeyEvent{KeyReleased}}}) = callbacks.on_key_released
-callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{ExposeEvent}}) = callbacks.on_expose
-callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{PointerEntersWindowEvent}}) = callbacks.on_pointer_enter
-callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{PointerLeavesWindowEvent}}) = callbacks.on_pointer_leave
-callback(callbacks::WindowCallbacks, ::Type{<:EventDetails{PointerMovesEvent}}) = callbacks.on_pointer_move
-
-function execute_callback(callbacks::WindowCallbacks, event_details::EventDetails; kwargs...)
-    cb = callback(callbacks, typeof(event_details))
-    if !isnothing(cb)
-        cb(event_details; kwargs...)
-    else
-        nothing
-    end
-end

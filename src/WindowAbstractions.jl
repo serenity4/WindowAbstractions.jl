@@ -94,11 +94,12 @@ export
         pressed_buttons,
 
         # Events and callbacks
-        WindowCallbacks,
-        EventLoop,
         EventDetails,
-        execute_callback,
         action,
+        Callbacks,
+        WindowCallbacks,
+        callback_symbol,
+        execute_callback,
 
         # Execution modes
         ExecutionMode,

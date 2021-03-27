@@ -128,13 +128,6 @@ struct PointerMovesEvent <: EventData end
 struct PointerLeavesWindowEvent <: EventData end
 struct PointerEntersWindowEvent <: EventData end
 
-action(::PointerMovesEvent) = PointerMoves()
-action(::PointerLeavesWindowEvent) = PointerLeavesWindow()
-action(::PointerEntersWindowEvent) = PointerEntersWindow()
-action(::ExposeEvent) = Expose()
-action(::ResizeEvent) = Resize()
-action(data::EventData) = data.action
-
 """
 Generic event structure holding data as an `EventData` member.
 """
@@ -144,8 +137,6 @@ struct EventDetails{T <: EventData, W <: AbstractWindow, F <: AbstractFloat}
     time::F
     win::W
 end
-
-action(event::EventDetails) = action(event.data)
 
 struct Drag
     src::MouseEvent
