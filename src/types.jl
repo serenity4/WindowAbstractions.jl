@@ -124,7 +124,11 @@ struct ExposeEvent <: EventData
     count::Int
 end
 
-struct PointerMovesEvent <: EventData end
+struct PointerMovesEvent <: EventData
+    state::MouseState
+    modifiers::KeyModifierState
+end
+
 struct PointerLeavesWindowEvent <: EventData end
 struct PointerEntersWindowEvent <: EventData end
 
