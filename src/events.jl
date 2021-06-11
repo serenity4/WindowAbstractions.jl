@@ -6,6 +6,8 @@ action(::Type{ResizeEvent}) = Resize
 action(::Type{<:MouseEvent{A}}) where {A} = A
 action(::Type{<:KeyEvent{A}}) where {A} = A
 action(::Type{<:EventDetails{T}}) where {T} = action(T)
+action(ed::EventDetails) = action(typeof(ed))
+action(ed::EventData) = action(typeof(ed))
 
 callback_symbol(::Type{Resize}) = :on_resize
 callback_symbol(::Type{ButtonPressed}) = :on_mouse_button_pressed
