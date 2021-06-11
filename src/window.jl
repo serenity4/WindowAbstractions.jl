@@ -1,5 +1,5 @@
 Base.broadcastable(win::AbstractWindow) = Ref(win)
-Base.broadcastable(wh::AbstractWindowHandler) = Ref(wh)
+Base.broadcastable(wm::AbstractWindowManager) = Ref(wm)
 
 """
 Window dimensions (width, height).
@@ -19,7 +19,7 @@ set_extent(win::AbstractWindow, extent) = not_implemented_for(win)
 """
 Clean up window state upon destruction. The window cannot be assumed to be mapped or to be valid.
 """
-terminate_window!(wh::AbstractWindowHandler, win::AbstractWindow) = not_implemented_for(wh)
+terminate_window!(wm::AbstractWindowManager, win::AbstractWindow) = not_implemented_for(wm)
 
 """
 Map a window to the screen.
@@ -48,8 +48,8 @@ set_icon_title(win::AbstractWindow, icon_title) = not_implemented_for(win)
 
 attach_graphics_context!(win::AbstractWindow, ctx) = not_implemented_for(win)
 
-get_window_symbol(wh::AbstractWindowHandler, win) = not_implemented_for(wh)
+get_window_symbol(wm::AbstractWindowManager, win) = not_implemented_for(wm)
 
-get_window(wh::AbstractWindowHandler, id) = not_implemented_for(wh)
+get_window(wm::AbstractWindowManager, id) = not_implemented_for(wm)
 
-callbacks(wh::AbstractWindowHandler, id) = not_implemented_for(wh)
+callbacks(wm::AbstractWindowManager, id) = not_implemented_for(wm)

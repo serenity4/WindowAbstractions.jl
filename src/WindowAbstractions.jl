@@ -23,14 +23,14 @@ include("keys.jl")
 include("exceptions.jl")
 include("inputs.jl")
 include("window.jl")
-include("window_handler.jl")
+include("window_manager.jl")
 include("events.jl")
 
 
 export
         # Windows
         AbstractWindow,
-        AbstractWindowHandler,
+        AbstractWindowManager,
         WindowException,
         InvalidWindow,
         CloseWindow,

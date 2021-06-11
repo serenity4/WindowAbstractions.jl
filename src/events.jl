@@ -29,15 +29,15 @@ function execute_callback(callbacks::Callbacks, event_details; kwargs...)
 end
 
 """
-    run(window_handler, Synchronous(); kwargs...)
+    run(window_manager, Synchronous(); kwargs...)
 
-Run an event loop associated with the `window_handler` in a synchronous fashion.
+Run an event loop associated with the `window_manager` in a synchronous fashion.
 """
-Base.run(W::AbstractWindowHandler, ::Synchronous; kwargs...) = not_implemented_for(W)
+Base.run(W::AbstractWindowManager, ::Synchronous; kwargs...) = not_implemented_for(W)
 
 """
-    run(window_handler, Asynchronous(); kwargs...)
+    run(window_manager, Asynchronous(); kwargs...)
 
-Run an event loop associated with the `window_handler` in an asynchronous fashion.
+Run an event loop associated with the `window_manager` in an asynchronous fashion.
 """
-Base.run(W::AbstractWindowHandler, ::Asynchronous; kwargs...) = not_implemented_for(W)
+Base.run(W::AbstractWindowManager, ::Asynchronous; kwargs...) = not_implemented_for(W)

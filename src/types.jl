@@ -1,7 +1,7 @@
 """
 Entity that manages windows.
 """
-abstract type AbstractWindowHandler end
+abstract type AbstractWindowManager end
 
 """
 Abstract window type.
@@ -236,7 +236,7 @@ Base.@kwdef struct WindowCallbacks <: Callbacks
 end
 
 """
-Abstract execution mode. Controls the execution of the event loop attached to a [`AbstractWindowHandler`](@ref)
+Abstract execution mode. Controls the execution of the event loop attached to a [`AbstractWindowManager`](@ref)
 """
 abstract type ExecutionMode end
 
