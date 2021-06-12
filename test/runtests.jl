@@ -19,6 +19,8 @@ struct FakeWindowManager <: AbstractWindowManager end
 win = FakeWindow()
 wm = FakeWindowManager()
 
+WindowAbstractions.callbacks(wm::FakeWindowManager, _) = cb
+
 not_implemented_for_window_exc = ErrorException("Not implemented for $win")
 not_implemented_for_window_manager_exc = ErrorException("Not implemented for $wm")
 
@@ -34,15 +36,15 @@ not_implemented_for_window_manager_exc = ErrorException("Not implemented for $wm
     end
 
     @testset "Callbacks" begin
-        @test execute_callback(cb, EventDetails(ExposeEvent((1, 1), 1), (1, 1), 1.0, win)) == 1
-        @test execute_callback(cb, EventDetails(ResizeEvent((1, 1)), (1, 1), 1.0, win)) == 2
-        @test execute_callback(cb, EventDetails(PointerMovesEvent(MouseState(), KeyModifierState()), (1, 1), 1.0, win)) == 3
-        @test execute_callback(cb, EventDetails(PointerEntersWindowEvent(), (1, 1), 1.0, win)) == 4
-        @test execute_callback(cb, EventDetails(PointerLeavesWindowEvent(), (1, 1), 1.0, win)) == 5
-        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyPressed()), (1, 1), 1.0, win)) == 6
-        @test execute_callback(cb, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyReleased()), (1, 1), 1.0, win)) == 7
-        @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonPressed()), (1, 1), 1.0, win)) == 8
-        @test execute_callback(cb, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonReleased()), (1, 1), 1.0, win)) == 9
+        @test execute_callback(wm, EventDetails(ExposeEvent((1, 1), 1), (1, 1), 1.0, win)) == 1
+        @test execute_callback(wm, EventDetails(ResizeEvent((1, 1)), (1, 1), 1.0, win)) == 2
+        @test execute_callback(wm, EventDetails(PointerMovesEvent(MouseState(), KeyModifierState()), (1, 1), 1.0, win)) == 3
+        @test execute_callback(wm, EventDetails(PointerEntersWindowEvent(), (1, 1), 1.0, win)) == 4
+        @test execute_callback(wm, EventDetails(PointerLeavesWindowEvent(), (1, 1), 1.0, win)) == 5
+        @test execute_callback(wm, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyPressed()), (1, 1), 1.0, win)) == 6
+        @test execute_callback(wm, EventDetails(KeyEvent(:Z02, KeySymbol(:z), 'z', KeyModifierState(ctrl=true), KeyReleased()), (1, 1), 1.0, win)) == 7
+        @test execute_callback(wm, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonPressed()), (1, 1), 1.0, win)) == 8
+        @test execute_callback(wm, EventDetails(MouseEvent(ButtonLeft(), MouseState(), ButtonReleased()), (1, 1), 1.0, win)) == 9
     end
 
     @testset "AbstractWindow Interface" begin
