@@ -142,15 +142,6 @@ struct EventDetails{T <: EventData, W <: AbstractWindow, F <: AbstractFloat}
     win::W
 end
 
-struct Drag
-    src::MouseEvent
-    dst::MouseEvent
-end
-
-struct InDrag
-    src::MouseEvent
-end
-
 """
 Exception attached to a specific [`AbstractWindow`](@ref) instance.
 """

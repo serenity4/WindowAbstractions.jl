@@ -21,25 +21,19 @@ callback_symbol(::Type{PointerMoves}) = :on_pointer_move
 
 callback(callbacks::Callbacks, T) = getproperty(callbacks, callback_symbol(action(T)))
 
-function execute_callback(callbacks::Callbacks, event_details; kwargs...)
-    cb = callback(callbacks, typeof(event_details))
-    if !isnothing(cb)
-        cb(event_details; kwargs...)
-    else
-        nothing
-    end
+function execute_callback(wm::AbstractWindowManager, ed::EventDetails)
+    execute_callback(callback(callbacks(wm, ed.win), typeof(ed)), (ed,))
 end
 
-"""
-    run(window_manager, Synchronous(); kwargs...)
+function execute_callback(cb::Function, args::Tuple)
+    cb(args...)
+end
 
-Run an event loop associated with the `window_manager` in a synchronous fashion.
-"""
-Base.run(W::AbstractWindowManager, ::Synchronous; kwargs...) = not_implemented_for(W)
+execute_callback(cb::Nothing, args::Tuple) = nothing
 
 """
-    run(window_manager, Asynchronous(); kwargs...)
+    run(window_manager, mode; kwargs...)
 
-Run an event loop associated with the `window_manager` in an asynchronous fashion.
+Run an event loop associated with the `window_manager` in a synchronous or asynchronous fashion.
 """
-Base.run(W::AbstractWindowManager, ::Asynchronous; kwargs...) = not_implemented_for(W)
+Base.run(W::AbstractWindowManager, ::ExecutionMode) = not_implemented_for(W)
