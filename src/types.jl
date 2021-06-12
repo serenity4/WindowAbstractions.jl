@@ -18,7 +18,7 @@ end
 
 "Key binding associated to a character and a key modifier state."
 struct KeyCombination
-    key::AbstractString
+    key::String
     state::KeyModifierState
     KeyCombination(key, state) = new(key ∈ keys(fkeys) ? fkeys[key] : string(key), state)
 end
@@ -161,7 +161,7 @@ Signals that the window must be closed.
 """
 struct CloseWindow <: WindowException
     win::AbstractWindow
-    msg::AbstractString
+    msg::String
 end
 
 """
@@ -171,7 +171,7 @@ Windows that are tagged invalid should be terminated.
 """
 struct InvalidWindow <: WindowException
     win::AbstractWindow
-    msg::AbstractString
+    msg::String
 end
 
 """
