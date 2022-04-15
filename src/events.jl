@@ -32,8 +32,8 @@ end
 execute_callback(cb::Nothing, args::Tuple) = nothing
 
 """
-    run(window_manager, mode; kwargs...)
+    run(wm, mode; kwargs...)
 
-Run an event loop associated with the `window_manager` in a synchronous or asynchronous fashion.
+Run an event loop associated with the window manager `wm` in a synchronous or asynchronous fashion.
 """
 Base.run(W::AbstractWindowManager, ::ExecutionMode) = not_implemented_for(W)

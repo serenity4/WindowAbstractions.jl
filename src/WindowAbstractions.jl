@@ -34,6 +34,7 @@ export
         WindowException,
         InvalidWindow,
         CloseWindow,
+        current_screen,
 
         # Event types
         Event,
