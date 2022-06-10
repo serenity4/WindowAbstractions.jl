@@ -25,8 +25,8 @@ Base.close(wm::AbstractWindowManager, ::AbstractWindow) = not_implemented_for(wm
 current_screen(wm::AbstractWindowManager) = not_implemented_for(wm)
 
 """
-Process an event received by either [`poll_for_event`](@ref) or [`wait_for_event`](@ref), modifying state (e.g. window, keymap) and/or returning an [`EventDetails`](@ref) instance.
+Handle an event received by either [`poll_for_event`](@ref) or [`wait_for_event`](@ref), modifying state (e.g. window, keymap) and/or returning an [`EventDetails`](@ref) instance.
 
 If the returned value is not an [`EventDetails`](@ref), then it must either be of type [`CloseWindow`](@ref) or [`InvalidWindow`](@ref), or `nothing`.
 """
-process_event(wm::AbstractWindowManager, event) = not_implemented_for(wm)
+handle_event(wm::AbstractWindowManager, event) = not_implemented_for(wm)

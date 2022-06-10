@@ -102,6 +102,7 @@ export
         callback_symbol,
         execute_callback,
         listen_for_events,
+        handle_event,
         process_event,
 
         # Macros

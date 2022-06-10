@@ -62,6 +62,6 @@ not_implemented_for_window_manager_exc = ErrorException("Not implemented for $wm
         @test_throws not_implemented_for_window_manager_exc get_window_symbol(wm, nothing)
         @test_throws not_implemented_for_window_manager_exc wait_for_event(wm)
         @test_throws not_implemented_for_window_manager_exc poll_for_event(wm)
-        @test_throws not_implemented_for_window_manager_exc process_event(wm, nothing)
+        @test_throws not_implemented_for_window_manager_exc handle_event(wm, nothing)
     end
 end;
