@@ -32,7 +32,7 @@ function execute_callback(callbacks::Callbacks, ed::EventDetails)
     f(ed)
 end
 
-function handle_events(wm::AbstractWindowManager, event)
+function handle_event(wm::AbstractWindowManager, event)
     ed = process_event(wm, event)
     isnothing(ed) && return nothing
     isa(ed, EventDetails) && (ed = execute_callback(wm, ed))
@@ -53,7 +53,7 @@ function listen_for_events(wm::AbstractWindowManager; sleep_time::Real = 0.001)
         while true
             event = poll_for_event(wm)
             isnothing(event) && break
-            handle_events(wm, event)
+            handle_event(wm, event)
         end
         iszero(sleep_time) ? yield() : sleep(sleep_time)
     end
