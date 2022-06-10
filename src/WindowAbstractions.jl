@@ -101,11 +101,8 @@ export
         WindowCallbacks,
         callback_symbol,
         execute_callback,
-
-        # Execution modes
-        ExecutionMode,
-        Synchronous,
-        Asynchronous,
+        listen_for_events,
+        process_event,
 
         # Macros
         @key_str

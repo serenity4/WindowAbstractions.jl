@@ -225,11 +225,3 @@ Base.@kwdef struct WindowCallbacks <: Callbacks
     """
     on_expose                = nothing
 end
-
-"""
-Abstract execution mode. Controls the execution of the event loop attached to a [`AbstractWindowManager`](@ref)
-"""
-abstract type ExecutionMode end
-
-struct Asynchronous <: ExecutionMode end
-struct Synchronous <: ExecutionMode end

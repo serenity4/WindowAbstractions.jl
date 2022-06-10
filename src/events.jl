@@ -18,22 +18,50 @@ callback_symbol(::Type{Expose}) = :on_expose
 callback_symbol(::Type{PointerEntersWindow}) = :on_pointer_enter
 callback_symbol(::Type{PointerLeavesWindow}) = :on_pointer_leave
 callback_symbol(::Type{PointerMoves}) = :on_pointer_move
+callback_symbol(::Type{CloseWindow}) = :on_close
+callback_symbol(::Type{InvalidWindow}) = :on_invalid
 
 callback(callbacks::Callbacks, T) = getproperty(callbacks, callback_symbol(action(T)))
+callback(callbacks::Callbacks, T::Union{Type{InvalidWindow}, Type{CloseWindow}}) = getproperty(callbacks, callback_symbol(T))
 
-function execute_callback(wm::AbstractWindowManager, ed::EventDetails)
-    execute_callback(callback(callbacks(wm, ed.win), typeof(ed)), (ed,))
+execute_callback(wm::AbstractWindowManager, ed::EventDetails) = execute_callback(callbacks(wm, ed.win), ed)
+
+function execute_callback(callbacks::Callbacks, ed::EventDetails)
+    f = callback(callbacks, typeof(ed))
+    isnothing(f) && return
+    f(ed)
 end
 
-function execute_callback(cb::Function, args::Tuple)
-    cb(args...)
+function handle_events(wm::AbstractWindowManager, event)
+    ed = process_event(wm, event)
+    isnothing(ed) && return nothing
+    isa(ed, EventDetails) && (ed = execute_callback(wm, ed))
+    if isa(ed, CloseWindow) || isa(ed, InvalidWindow)
+        f = callback(callbacks(wm, ed.win), typeof(ed))
+        f(wm, ed)
+    end
 end
 
-execute_callback(cb::Nothing, args::Tuple) = nothing
+"""
+Run an event loop for the window manager `wm` which listens for events and processes them.
+
+If `sleep_time` is non-zero, `Base.sleep` will be called between each round of polling (i.e. between successive tries that return no event).
+"""
+function listen_for_events(wm::AbstractWindowManager; sleep_time::Real = 0.001)
+    !iszero(sleep_time) && sleep_time < 0.001 && @warn("The granularity of `sleep` is 0.001 (1 millisecond). Any non-zero value higher lower than 1ms will be clamped to 1ms.")
+    while !isempty(wm.windows)
+        while true
+            event = poll_for_event(wm)
+            isnothing(event) && break
+            handle_events(wm, event)
+        end
+        !iszero(sleep_time) && sleep(sleep_time)
+    end
+end
 
 """
-    run(wm, mode; kwargs...)
+Run an event loop for the window manager `wm` which listens for events and processes them.
 
-Run an event loop associated with the window manager `wm` in a synchronous or asynchronous fashion.
+If `sleep_time` is non-zero, `Base.sleep` will be called between each round of polling (i.e. between successive tries that return no event).
 """
-Base.run(W::AbstractWindowManager, ::ExecutionMode) = not_implemented_for(W)
+Base.run(wm::AbstractWindowManager; sleep_time::Real = 0.001) = listen_for_events(wm; sleep_time)
