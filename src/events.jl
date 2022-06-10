@@ -55,7 +55,7 @@ function listen_for_events(wm::AbstractWindowManager; sleep_time::Real = 0.001)
             isnothing(event) && break
             handle_events(wm, event)
         end
-        !iszero(sleep_time) && sleep(sleep_time)
+        iszero(sleep_time) ? yield() : sleep(sleep_time)
     end
 end
 
