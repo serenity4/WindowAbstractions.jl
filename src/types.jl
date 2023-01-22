@@ -73,7 +73,7 @@ struct KeyEvent{A <: KeyAction} <: EventData
     """
     key_name::Symbol
     """
-    The symbol associated to the keystroke.
+    The symbol associated with the keystroke.
     """
     key::KeySymbol
     """

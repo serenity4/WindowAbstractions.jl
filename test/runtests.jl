@@ -1,4 +1,5 @@
 using WindowAbstractions
+using XKeyboard
 using Test
 
 cb = WindowCallbacks(

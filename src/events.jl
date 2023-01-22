@@ -21,7 +21,7 @@ callback_symbol(::Type{PointerMoves}) = :on_pointer_move
 callback_symbol(::Type{CloseWindow}) = :on_close
 callback_symbol(::Type{InvalidWindow}) = :on_invalid
 
-callback(callbacks::Callbacks, T) = getproperty(callbacks, callback_symbol(action(T)))
+callback(callbacks::Callbacks, T::Type) = getproperty(callbacks, callback_symbol(action(T)))
 callback(callbacks::Callbacks, T::Union{Type{InvalidWindow}, Type{CloseWindow}}) = getproperty(callbacks, callback_symbol(T))
 
 execute_callback(wm::AbstractWindowManager, ed::EventDetails) = execute_callback(callbacks(wm, ed.win), ed)
@@ -50,12 +50,19 @@ If `sleep_time` is non-zero, `Base.sleep` will be called between each round of p
 function listen_for_events(wm::AbstractWindowManager; sleep_time::Real = 0.001)
     !iszero(sleep_time) && sleep_time < 0.001 && @warn("The granularity of `sleep` is 0.001 (1 millisecond). Any non-zero value higher lower than 1ms will be clamped to 1ms.")
     while !isempty(wm.windows)
-        while true
-            event = poll_for_event(wm)
-            isnothing(event) && break
-            process_event(wm, event)
-        end
+        process_all_events(wm)
         iszero(sleep_time) ? yield() : sleep(sleep_time)
+    end
+end
+
+"""
+Dispatch events received on `wm` until the event queue is empty.
+"""
+function process_all_events(wm::AbstractWindowManager)
+    while true
+        event = poll_for_event(wm)
+        isnothing(event) && break
+        process_event(wm, event)
     end
 end
 

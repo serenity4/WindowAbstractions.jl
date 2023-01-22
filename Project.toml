@@ -6,12 +6,19 @@ version = "0.5.0"
 [deps]
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 
+[weakdeps]
+XKeyboard = "0c8a7d74-93ea-4f23-9ed1-b26578bfdfe6"
+
 [compat]
 DocStringExtensions = "0.8"
-julia = "1.5"
+XKeyboard = "0.1"
+julia = "1.8"
+
+[extensions]
+WindowAbstractionsXKB = "XKeyboard"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Test"]
+test = ["Test", "XKeyboard"]
