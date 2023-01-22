@@ -34,7 +34,7 @@ end
 
 function print_key_info(io::IO, km::Keymap, event::KeyEvent)
   (; key_name, key, input) = event
-  print_key_info(io, string(key_name), PhysicalKey(km, key_name).code, string(key))
+  print_key_info(io, string(key_name), PhysicalKey(km, key_name).code, input, string(key))
 end
 
 end
