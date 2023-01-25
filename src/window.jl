@@ -50,6 +50,12 @@ attach_graphics_context!(win::AbstractWindow, ctx) = not_implemented_for(win)
 
 get_window_symbol(wm::AbstractWindowManager, win) = not_implemented_for(wm)
 
+"""
+Retrieve a window given an identifier `id`, would typically be an integer identifier, a handle or a name.
+"""
 get_window(wm::AbstractWindowManager, id) = not_implemented_for(wm)
 
-callbacks(wm::AbstractWindowManager, id) = not_implemented_for(wm)
+"""
+Return the set of [`Callbacks`](@ref) attached to a window.
+"""
+callbacks(wm::AbstractWindowManager, win::AbstractWindow) = not_implemented_for(wm)

@@ -213,6 +213,14 @@ Base.@kwdef struct WindowCallbacks <: Callbacks
     """
     on_pointer_leave         = nothing
     """
+    Keyboard focus enters the window.
+    """
+    on_keyboard_enter        = nothing
+    """
+    Keyboard focus leaves the window.
+    """
+    on_keyboard_leave        = nothing
+    """
     A key was pressed. Note that some key combinations can be reserved by the OS, so they don't trigger the corresponding event. On Ubuntu 20.04, this is for example the case with some combinations of the form alt+fkey such as alt+f4.
     """
     on_key_pressed           = nothing

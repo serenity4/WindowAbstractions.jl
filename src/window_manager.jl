@@ -30,3 +30,8 @@ Handle an event received by either [`poll_for_event`](@ref) or [`wait_for_event`
 If the returned value is not an [`EventDetails`](@ref), then it must either be of type [`CloseWindow`](@ref) or [`InvalidWindow`](@ref), or `nothing`.
 """
 handle_event(wm::AbstractWindowManager, event) = not_implemented_for(wm)
+
+"""
+Retrieve all the [`AbstractWindow`](@ref)s in use by `wm`.
+"""
+windows(wm::AbstractWindowManager) = not_implemented_for(wm)
