@@ -1,12 +1,9 @@
 """
-Non-blocking poll for events. Should return an element of type `Nothing` if no events were caught.
+Entity that manages windows.
 """
-poll_for_event(wm::AbstractWindowManager) = not_implemented_for(wm)
+abstract type AbstractWindowManager end
 
-"""
-Wait until the next event occurs.
-"""
-wait_for_event(wm::AbstractWindowManager) = not_implemented_for(wm)
+Base.broadcastable(wm::AbstractWindowManager) = Ref(wm)
 
 """
     (::Type{<:AbstractWindow})(wm::AbstractWindowManager; kwargs...)
@@ -24,14 +21,14 @@ Base.close(wm::AbstractWindowManager, ::AbstractWindow) = not_implemented_for(wm
 
 current_screen(wm::AbstractWindowManager) = not_implemented_for(wm)
 
-"""
-Handle an event received by either [`poll_for_event`](@ref) or [`wait_for_event`](@ref), modifying state (e.g. window, keymap) and/or returning an [`EventDetails`](@ref) instance.
-
-If the returned value is not an [`EventDetails`](@ref), then it must either be of type [`CloseWindow`](@ref) or [`InvalidWindow`](@ref), or `nothing`.
-"""
-handle_event(wm::AbstractWindowManager, event) = not_implemented_for(wm)
+window_type(wm::AbstractWindowManager) = not_implemented_for(wm)
 
 """
 Retrieve all the [`AbstractWindow`](@ref)s in use by `wm`.
 """
 windows(wm::AbstractWindowManager) = not_implemented_for(wm)
+
+"""
+Retrieve a window given an identifier `id`, would typically be an integer identifier, a handle or a name.
+"""
+get_window(wm::AbstractWindowManager, id) = not_implemented_for(wm)

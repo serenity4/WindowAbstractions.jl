@@ -39,28 +39,19 @@ function Base.show(io::IO, key::KeyCombination)
     print(io, join(states, '+'))
 end
 
-function Base.show(io::IO, button::MouseState)
-    states = String[]
-    for field ∈ fieldnames(MouseState)
-        push!(states, string(field, '=', getproperty(button, field)))
-    end
-    print(io, join(states, ", "))
+@bitmask MouseButton::UInt32 begin
+    BUTTON_NONE = 0
+    BUTTON_LEFT = 1
+    BUTTON_MIDDLE = 2
+    BUTTON_RIGHT = 4
+    BUTTON_SCROLL_UP = 8
+    BUTTON_SCROLL_DOWN = 16
 end
+
+MouseButton() = zero(MouseButton)
 
 """
 Construct a KeyCombination instance from a string as `"[<state_1>+[...<state_n>+]]<key>"`.
 The string must be a list of elements separated by '+' characters, with only one non-state character or one fkey as string. For example, `"k"`, `"alt+k"` and `"ctrl+alt+shift+k"` are valid strings, but `"k+a"` is not. Casing is ignored. Fkeys are simply f<1-12> keys, for example `key"alt+f4"` is valid.
 """
 macro key_str(expr) esc(:(KeyCombination($(Meta.parse("\"$(escape_string(expr))\""))))) end
-
-Base.Dict(event::MouseState) = Dict{Symbol, Bool}((k => getproperty(event, k)) for k ∈ fieldnames(MouseState))
-
-"""
-Retrieve a list of pressed button symbols for the left, middle and right buttons from a [`MouseState`](@ref).
-"""
-function pressed_buttons(input::MouseState)
-    inputs = filter(x -> x.second && x.first ∈ (:left, :middle, :right), Dict(input))
-    pressed_buttons = Set(keys(inputs))
-end
-
-const no_input = '\0'

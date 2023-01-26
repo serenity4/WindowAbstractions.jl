@@ -1,5 +1,6 @@
 module WindowAbstractions
 
+using BitMasks: @bitmask
 using DocStringExtensions
 
 @template (FUNCTIONS, METHODS, MACROS) =
@@ -18,93 +19,70 @@ using DocStringExtensions
 
 
 include("utils.jl")
-include("types.jl")
 include("keys.jl")
-include("exceptions.jl")
 include("inputs.jl")
 include("window.jl")
 include("window_manager.jl")
 include("events.jl")
-
+include("event_queue.jl")
 
 export
         # Windows
         AbstractWindow,
         AbstractWindowManager,
-        WindowException,
-        InvalidWindow,
-        CloseWindow,
         current_screen,
 
         # Event types
         Event,
-        EventData,
         KeyEvent,
-        KeyAction,
-        KeyPressed,
-        KeyReleased,
         MouseEvent,
-        MouseAction,
-        ButtonPressed,
-        ButtonReleased,
-        PointerEvent,
-        PointerMoves,
-        PointerEntersWindow,
-        PointerLeavesWindow,
-        Resize,
-        ResizeEvent,
-        Expose,
-        ExposeEvent,
-        PointerEntersWindowEvent,
-        PointerLeavesWindowEvent,
-        PointerMovesEvent,
+        PointerState,
+        EventType,
+        is_key_event, is_button_event, is_pointer_event, is_window_event,
+        KEY_PRESSED,
+        KEY_RELEASED,
+        BUTTON_PRESSED,
+        BUTTON_RELEASED,
+        POINTER_ENTERED,
+        POINTER_MOVED,
+        POINTER_EXITED,
+        WINDOW_GAINED_FOCUS,
+        WINDOW_LOST_FOCUS,
+        WINDOW_RESIZED,
+        WINDOW_EXPOSED,
+        WINDOW_CLOSED,
+        WINDOW_INVALID,
+        EventQueue,
 
         # Keyboard
         KeyModifierState,
         KeyContext,
         KeyCombination,
-        no_input,
         KeySymbol,
         key_symbol,
         is_key_defined,
 
         # Mouse
         MouseButton,
-        ButtonLeft,
-        ButtonMiddle,
-        ButtonRight,
-        ButtonScrollDown,
-        ButtonScrollUp,
-        MouseState,
+        BUTTON_NONE,
+        BUTTON_LEFT,
+        BUTTON_MIDDLE,
+        BUTTON_RIGHT,
+        BUTTON_SCROLL_UP,
+        BUTTON_SCROLL_DOWN,
 
         # Windowing API functions
         extent,
         dpi,
-        set_extent,
-        terminate_window!,
+        resize,
         map_window,
         unmap_window,
         set_title,
         set_icon,
         set_icon_title,
-        attach_graphics_context!,
-        wait_for_event,
-        poll_for_event,
+        poll_for_events!,
+        windows,
         get_window,
-        get_window_symbol,
-        pressed_buttons,
-
-        # Events and callbacks
-        EventDetails,
-        action,
-        Callbacks,
-        WindowCallbacks,
-        callback_symbol,
-        execute_callback,
-        listen_for_events,
-        process_all_events,
-        handle_event,
-        process_event,
 
         # Macros
         @key_str

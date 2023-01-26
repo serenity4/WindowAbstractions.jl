@@ -1,6 +1,6 @@
 module WindowAbstractionsXKB
 
-import WindowAbstractions: KeySymbol, KeyEvent, KeyModifierState, KeyAction
+import WindowAbstractions: KeySymbol, EventType, KeyEvent, KeyModifierState
 import XKeyboard: print_key_info
 using XKeyboard: Keymap, PhysicalKey, Keysym
 
@@ -28,8 +28,8 @@ KeySymbol(km::Keymap, key::PhysicalKey) = KeySymbol(Keysym(km, key))
 """
 Produce a key event based on a key name, a modifier state and an action using a keymap.
 """
-function KeyEvent(km::Keymap, key::PhysicalKey, modifiers::KeyModifierState, action::KeyAction)
-    KeyEvent(Symbol(km, key), KeySymbol(km, key), Char(km, key), modifiers, action)
+function KeyEvent(km::Keymap, key::PhysicalKey, modifiers::KeyModifierState)
+    KeyEvent(Symbol(km, key), KeySymbol(km, key), Char(km, key), modifiers)
 end
 
 function print_key_info(io::IO, km::Keymap, event::KeyEvent)
