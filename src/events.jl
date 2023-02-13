@@ -117,7 +117,7 @@ struct KeyEvent
     """
     Modifier state.
     """
-    modifiers::KeyModifierState
+    modifiers::ModifierState
 end
 
 struct MouseEvent
@@ -127,5 +127,5 @@ end
 
 struct PointerState
     state::MouseButton
-    modifiers::KeyModifierState
+    modifiers::ModifierState
 end

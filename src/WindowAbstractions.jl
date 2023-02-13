@@ -1,6 +1,6 @@
 module WindowAbstractions
 
-using BitMasks: @bitmask
+using BitMasks: @bitmask, enabled_flags
 using DocStringExtensions
 
 @template (FUNCTIONS, METHODS, MACROS) =
@@ -55,8 +55,17 @@ export
         EventQueue,
 
         # Keyboard
-        KeyModifierState,
-        KeyContext,
+        ModifierState,
+        enabled_flags,
+        NO_MODIFIERS,
+        SHIFT_MODIFIER,
+        LOCK_MOIDIFER,
+        CTRL_MODIFIER,
+        MOD1_MODIFIER,
+        MOD2_MODIFIER,
+        MOD3_MODIFIER,
+        MOD4_MODIFIER,
+        MOD5_MODIFIER,
         KeyCombination,
         KeySymbol,
         key_symbol,

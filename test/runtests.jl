@@ -1,4 +1,5 @@
 using WindowAbstractions
+using WindowAbstractions: matches
 using XKeyboard
 using Test
 
@@ -15,13 +16,19 @@ not_implemented_for(x) = ErrorException("Not implemented for $x")
 
 @testset "WindowAbstractions.jl" begin
     @testset "Key Combinations" begin
-        @test key"ctrl+z" == KeyCombination('z', KeyModifierState(ctrl=true))
-        @test key"alt+z" == KeyCombination('z', KeyModifierState(alt=true))
-        @test key"super+z" == KeyCombination('z', KeyModifierState(super=true))
-        @test key"z" == KeyCombination('z', KeyModifierState())
-        @test key"ctrl+shift+z" == KeyCombination('z', KeyModifierState(ctrl=true, shift=true))
-        @test key"ctrl+shift+alt+super+z" == KeyCombination('z', KeyModifierState(ctrl=true, shift=true, super=true, alt=true))
-        @test key"ctrl+z" == key"CTRL+Z"
+        @test key"ctrl+z" == KeyCombination(:z, CTRL_MODIFIER)
+        @test key"alt+z" == KeyCombination(:z, MOD1_MODIFIER)
+        @test key"super+z" == KeyCombination(:z, MOD3_MODIFIER)
+        @test key"alt_gr+z" == KeyCombination(:z, MOD5_MODIFIER)
+        @test key"z" == KeyCombination(:z)
+        @test key"ctrl+shift+z" == KeyCombination(:z, CTRL_MODIFIER | SHIFT_MODIFIER)
+        @test key"ctrl+shift+alt+super+z" == KeyCombination(:z, CTRL_MODIFIER | SHIFT_MODIFIER | MOD1_MODIFIER | MOD3_MODIFIER)
+        @test key"ctrl+z" != key"ctrl+Z"
+        @test key"ctrl+z" == key"CTRL+z"
+        @test !matches(key"ctrl+z", KeySymbol(:z), NO_MODIFIERS, NO_MODIFIERS)
+        @test matches(key"ctrl+z", KeySymbol(:z), CTRL_MODIFIER, NO_MODIFIERS)
+        @test matches(key"ctrl+Z", KeySymbol(:Z), CTRL_MODIFIER | SHIFT_MODIFIER, SHIFT_MODIFIER)
+        @test !matches(key"ctrl+Z", KeySymbol(:Z), CTRL_MODIFIER | SHIFT_MODIFIER, NO_MODIFIERS)
     end
 
     @testset "AbstractWindow Interface" begin
@@ -33,7 +40,7 @@ not_implemented_for(x) = ErrorException("Not implemented for $x")
         @test_throws not_implemented_for(win) set_title(win, "title")
         @test_throws not_implemented_for(win) set_icon(win, nothing)
         @test_throws not_implemented_for(win) set_icon_title(win, "icon_title")
-        @test_throws not_implemented_for(wm) terminate_window!(wm, win)
+        @test_throws not_implemented_for(wm) close(wm, win)
         @test_throws not_implemented_for(wm) get_window(wm, nothing)
         @test_throws not_implemented_for(queue) poll_for_events!(queue)
     end

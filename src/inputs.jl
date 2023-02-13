@@ -1,42 +1,10 @@
-Base.show(io::IO, keyctx::KeyContext) = print(io, "num_lock=", keyctx.numlock, ", caps=", keyctx.caps)
-
-KeyCombination(key::KeySymbol, modifiers::KeyModifierState) = KeyCombination(key.symbol, modifiers)
+KeyCombination(key::KeySymbol, modifiers::ModifierState) = KeyCombination(key.symbol, modifiers)
 
 function KeyCombination(key_combination::AbstractString)
-    els = split(lowercase(key_combination), "+")
-    char_part = last(els)
-    fkey = match(r"f\d+$", char_part)
-    if !isnothing(fkey)
-        char_part = fkey.match
-    else
-        @assert length(char_part) == 1 "Character part $char_part of $key_combination must be a single character"
-    end
-    modifiers = els[1:end-1]
-    KeyCombination(char_part, KeyModifierState(; map(x -> (Symbol(x), true), modifiers)...))
-end
-
-const fkeys = Dict(
-    '\uffbe' => "f1",
-    '\uffbf' => "f2",
-    '\uffc0' => "f3",
-    '\uffc1' => "f4",
-    '\uffc2' => "f5",
-    '\uffc3' => "f6",
-    '\uffc4' => "f7",
-    '\uffc5' => "f8",
-    '\uffc6' => "f9",
-    '\uffc7' => "f10",
-    '\uffc8' => "f11",
-    '\uffc9' => "f12",
-)
-
-function Base.show(io::IO, key::KeyCombination)
-    states = String[]
-    for field ∈ reverse(fieldnames(KeyModifierState))
-        getproperty(key.state, field) ? push!(states, string(field)) : nothing
-    end
-    push!(states, key.key)
-    print(io, join(states, '+'))
+    els = split(key_combination, "+")
+    key_symbol = Symbol(last(els))
+    exact_modifiers = reduce((x, y) -> x | ModifierState(Symbol(y)), @view els[1:end-1]; init = zero(ModifierState))
+    KeyCombination(Symbol(key_symbol), exact_modifiers)
 end
 
 @bitmask MouseButton::UInt32 begin
