@@ -118,7 +118,12 @@ struct KeyEvent
     Modifier state.
     """
     modifiers::ModifierState
+    """
+    Modifiers that were used when translating the physical key into a key symbol.
+    """
+    consumed_modifiers::ModifierState
 end
+KeyEvent(key_name, key, input, modifiers = NO_MODIFIERS) = KeyEvent(key_name, key, input, modifiers, NO_MODIFIERS)
 
 struct MouseEvent
     button::MouseButton

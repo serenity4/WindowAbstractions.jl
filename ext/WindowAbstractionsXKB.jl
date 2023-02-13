@@ -1,8 +1,8 @@
 module WindowAbstractionsXKB
 
-import WindowAbstractions: KeySymbol, EventType, KeyEvent, ModifierState
+import WindowAbstractions: KeySymbol, EventType, KeyEvent, ModifierState, NO_MODIFIERS
 import XKeyboard: print_key_info
-using XKeyboard: Keymap, PhysicalKey, Keysym
+using XKeyboard: Keymap, PhysicalKey, Keysym, xkb_state_key_get_consumed_mods
 
 "Translate a few names so that they are more friendly."
 const keysym_names_translation = Dict(
@@ -28,9 +28,11 @@ KeySymbol(km::Keymap, key::PhysicalKey) = KeySymbol(Keysym(km, key))
 """
 Produce a key event based on a key name, a modifier state and an action using a keymap.
 """
-function KeyEvent(km::Keymap, key::PhysicalKey, modifiers::ModifierState)
-    KeyEvent(Symbol(km, key), KeySymbol(km, key), Char(km, key), modifiers)
+function KeyEvent(km::Keymap, key::PhysicalKey, modifiers::ModifierState = NO_MODIFIERS)
+    KeyEvent(Symbol(km, key), KeySymbol(km, key), Char(km, key), modifiers, consumed_modifiers(km, key))
 end
+
+consumed_modifiers(km::Keymap, key::PhysicalKey) = ModifierState(xkb_state_key_get_consumed_mods(km.state, key.code))
 
 function print_key_info(io::IO, km::Keymap, event::KeyEvent)
   (; key_name, key, input) = event
