@@ -8,19 +8,20 @@ EventQueue(wm::AbstractWindowManager; sleep::Bool = true) = EventQueue{typeof(wm
 EventQueue{WM,W}(wm::WM, sleep::Bool) where {WM,W} = EventQueue{WM,W}(wm, W[], sleep)
 
 Base.push!(queue::EventQueue, event::Event) = push!(queue.events, event)
-Base.pop!(queue::EventQueue) = popfirst!(queue.events)
+Base.popfirst!(queue::EventQueue) = popfirst!(queue.events)
 Base.isempty(queue::EventQueue) = isempty(queue.events)
 
 function Base.iterate(queue::EventQueue, state = nothing)
   (; sleep) = queue
-  while isempty(queue.events)
+  while isempty(queue)
     sleep ? Base.sleep(0.001) : yield()
-    poll_for_events!(queue)
+    collect_events!(queue)
   end
-  (pop!(queue), nothing)
+  (popfirst!(queue), nothing)
 end
 
-"""
-Non-blocking poll for events. Should return an element of type `Nothing` if no events were caught.
-"""
+# Is it assumed that the client API will not be sending events faster than we process them.
+collect_events!(queue::EventQueue) = while poll_for_events!(queue) end
+
+"Non-blocking poll for events. Must return whether a client event was consumed, even if no `Event` is added to the queue."
 poll_for_events!(queue::EventQueue) = not_implemented_for(queue)

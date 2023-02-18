@@ -134,3 +134,7 @@ struct PointerState
     state::MouseButton
     modifiers::ModifierState
 end
+
+matches(kc::KeyCombination, event::KeyEvent) = matches(kc, event.key, event.modifiers, event.consumed_modifiers)
+matches(kc::KeyCombination, event::Event) = is_key_event(event) && matches(kc, event.key_event)
+matches(event::Union{KeyEvent,Event}) = Base.Fix2(matches, event)

@@ -52,7 +52,10 @@ export
         WINDOW_EXPOSED,
         WINDOW_CLOSED,
         WINDOW_INVALID,
+
+        # Event queue
         EventQueue,
+        collect_events!,
 
         # Keyboard
         ModifierState,
@@ -70,6 +73,7 @@ export
         KeySymbol,
         key_symbol,
         is_key_defined,
+        matches,
 
         # Mouse
         MouseButton,
