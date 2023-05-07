@@ -8,6 +8,7 @@ BitMasks = "a3e06817-fd65-4797-8291-16f435bc2529"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 
 [compat]
+BitMasks = "0.1"
 DocStringExtensions = "0.8, 0.9"
 XKeyboard = "0.1"
 julia = "1.9"
