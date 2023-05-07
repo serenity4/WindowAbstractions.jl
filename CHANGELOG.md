@@ -9,8 +9,6 @@
 - ![BREAKING][badge-breaking] `KeyContext` has been removed and its data moved over to `ModifierState` values (capslock and mod2 for numlock).
 - ![BREAKING][badge-breaking] `KeyCombination` has been modified to scope which modifiers to match on a lookup.
 
-Documentation has also been improved. Check it out to learn more about the current API, which has greatly changed in this release.
-
 [badge-breaking]: https://img.shields.io/badge/BREAKING-red.svg
 [badge-deprecation]: https://img.shields.io/badge/deprecation-orange.svg
 [badge-feature]: https://img.shields.io/badge/feature-green.svg

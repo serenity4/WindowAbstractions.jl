@@ -1,3 +1,6 @@
+"""
+Type of input or window event which may occur on a particular window.
+"""
 @enum EventType::UInt32 begin
     KEY_PRESSED  = 0x10000001
     KEY_RELEASED = 0x10000002
@@ -53,7 +56,7 @@ A window was exposed to the screen; either right after creation, or when it was 
 """
 WINDOW_EXPOSED
 """
-The window is closing normally upon raising an exception of type [`CloseWindow`](@ref).
+The window was closed, e.g. manually by the user or by a programmatic action.
 """
 WINDOW_CLOSED
 """
@@ -125,11 +128,13 @@ struct KeyEvent
 end
 KeyEvent(key_name, key, input, modifiers = NO_MODIFIERS) = KeyEvent(key_name, key, input, modifiers, NO_MODIFIERS)
 
+"A mouse press/release associated to a certain state."
 struct MouseEvent
     button::MouseButton
     state::MouseButton
 end
 
+"Context in which a pointer motion was performed, including active mouse buttons and keyboard modifiers."
 struct PointerState
     state::MouseButton
     modifiers::ModifierState
