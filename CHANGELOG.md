@@ -2,9 +2,9 @@
 
 ## Version `v0.6`
 
-- ![BREAKING][badge-breaking] The callback-based API has been replaced by an event queue-based API. Instead of providing a high-level interface for callbacks (which execute when events of a certain kind have been detected), it provides you with events directly that you can pull from a queue so that you have full control over how events are handled, and you decide when to poll for events.
+- ![BREAKING][badge-breaking] ![Feature][badge-feature] The callback-based API has been replaced by an event queue-based API. Instead of providing a high-level interface for callbacks (which execute when events of a certain kind have been detected), it provides you with events which you can pull from a queue so that you have full control over how events are handled, and when to poll for new events.
 - `set_extent` has been renamed `resize`.
-- ![BREAKING][badge-breaking] `EventDetails` has been removed in favor of an `Event` type, which possesses an `EventType` enum which indicates the type of event; previously, this information was encoded in the type of the event data, largely resulting in type stabilities.
+- ![BREAKING][badge-breaking] `EventDetails` has been removed in favor of an `Event` type, which possesses an `EventType` enum which indicates the type of event; previously, this information was encoded in the type of the event data, largely resulting in type instabilities.
 - ![BREAKING][badge-breaking] `KeyModifierState` has been removed in favor of a `ModifierState` integer bitmask to make masking operations easier.
 - ![BREAKING][badge-breaking] `KeyContext` has been removed and its data moved over to `ModifierState` values (capslock and mod2 for numlock).
 - ![BREAKING][badge-breaking] `KeyCombination` has been modified to scope which modifiers to match on a lookup.
