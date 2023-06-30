@@ -122,7 +122,7 @@ key_symbol(name::AbstractString) = key_symbol(Symbol(name))
 
 Base.show(io::IO, key::KeySymbol) = print(io, key.symbol)
 
-@bitmask ModifierState::UInt8 begin
+@bitmask exported = true ModifierState::UInt8 begin
     NO_MODIFIERS = 0
     SHIFT_MODIFIER = 1
     LOCK_MOIDIFER = 2

@@ -7,7 +7,7 @@ function KeyCombination(key_combination::AbstractString)
     KeyCombination(Symbol(key_symbol), exact_modifiers)
 end
 
-@bitmask MouseButton::UInt32 begin
+@bitmask exported = true MouseButton::UInt32 begin
     BUTTON_NONE = 0
     BUTTON_LEFT = 1
     BUTTON_MIDDLE = 2

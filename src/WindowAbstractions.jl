@@ -1,6 +1,8 @@
 module WindowAbstractions
 
 using BitMasks: @bitmask, enabled_flags
+export enabled_flags
+
 using DocStringExtensions
 
 @template (FUNCTIONS, METHODS, MACROS) =
@@ -37,52 +39,17 @@ export
         KeyEvent,
         MouseEvent,
         PointerState,
-        EventType,
-        is_key_event, is_button_event, is_pointer_event, is_window_event,
-        KEY_PRESSED,
-        KEY_RELEASED,
-        BUTTON_PRESSED,
-        BUTTON_RELEASED,
-        POINTER_ENTERED,
-        POINTER_MOVED,
-        POINTER_EXITED,
-        WINDOW_GAINED_FOCUS,
-        WINDOW_LOST_FOCUS,
-        WINDOW_RESIZED,
-        WINDOW_EXPOSED,
-        WINDOW_CLOSED,
-        WINDOW_INVALID,
 
         # Event queue
         EventQueue,
         collect_events!,
 
         # Keyboard
-        ModifierState,
-        enabled_flags,
-        NO_MODIFIERS,
-        SHIFT_MODIFIER,
-        LOCK_MOIDIFER,
-        CTRL_MODIFIER,
-        MOD1_MODIFIER,
-        MOD2_MODIFIER,
-        MOD3_MODIFIER,
-        MOD4_MODIFIER,
-        MOD5_MODIFIER,
         KeyCombination,
         KeySymbol,
         key_symbol,
         is_key_defined,
         matches,
-
-        # Mouse
-        MouseButton,
-        BUTTON_NONE,
-        BUTTON_LEFT,
-        BUTTON_MIDDLE,
-        BUTTON_RIGHT,
-        BUTTON_SCROLL_UP,
-        BUTTON_SCROLL_DOWN,
 
         # Windowing API functions
         extent,

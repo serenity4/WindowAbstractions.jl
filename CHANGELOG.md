@@ -1,5 +1,9 @@
 # Changelog for WindowAbstractions.jl
 
+## Version `v0.7`
+
+- ![BREAKING][badge-breaking] ![Enhancement][badge-enhancement] The utility functions `is_key_event`, `is_button_event`, `is_pointer_event` and `is_window_event` have been removed, in favor of new bitmask combinations `KEY_EVENT`, `BUTTON_EVENT`, `POINTER_EVENT` and `WINDOW_EVENT`.
+
 ## Version `v0.6`
 
 - ![BREAKING][badge-breaking] ![Feature][badge-feature] The callback-based API has been replaced by an event queue-based API. Instead of providing a high-level interface for callbacks (which execute when events of a certain kind have been detected), it provides you with events which you can pull from a queue so that you have full control over how events are handled, and when to poll for new events.
