@@ -43,6 +43,7 @@ export
         # Event queue
         EventQueue,
         collect_events!,
+        save_history, replay_history,
 
         # Keyboard
         KeyCombination,
