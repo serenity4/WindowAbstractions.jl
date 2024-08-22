@@ -125,7 +125,7 @@ Base.show(io::IO, key::KeySymbol) = print(io, key.symbol)
 @bitmask exported = true ModifierState::UInt8 begin
     NO_MODIFIERS = 0
     SHIFT_MODIFIER = 1
-    LOCK_MOIDIFER = 2
+    LOCK_MODIFIER = 2
     CTRL_MODIFIER = 4
     MOD1_MODIFIER = 8
     MOD2_MODIFIER = 16
@@ -136,7 +136,7 @@ end
 
 const modifier_names_short = Dict(
     :shift => SHIFT_MODIFIER,
-    :caps_lock => LOCK_MOIDIFER,
+    :caps_lock => LOCK_MODIFIER,
     :ctrl => CTRL_MODIFIER,
     :alt => MOD1_MODIFIER,
     :num_lock => MOD2_MODIFIER,
