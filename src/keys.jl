@@ -152,6 +152,19 @@ function ModifierState(name::Symbol)
     ret
 end
 
+function ModifierState(key::KeySymbol)
+    name = key.symbol
+    in(name, (:shift_left, :shift_right)) && return SHIFT_MODIFIER
+    name == :caps_lock && return LOCK_MODIFIER
+    in(name, (:control_left, :control_right)) && return CTRL_MODIFIER
+    name == :alt_left && return MOD1_MODIFIER
+    name == :num_lock && return MOD2_MODIFIER
+    name == :super_right && return MOD3_MODIFIER
+    name == :super_l && return MOD4_MODIFIER
+    name == :alt_gr && return MOD5_MODIFIER
+    NO_MODIFIERS
+end
+
 "Key binding associated to a character and a key modifier state."
 struct KeyCombination
     key::KeySymbol
