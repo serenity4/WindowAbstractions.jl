@@ -1,6 +1,7 @@
 using WindowAbstractions
 using WindowAbstractions: matches
 using XKeyboard
+using Xorg_libxcb_jll: libxcb
 using Test
 
 struct FakeWindow <: AbstractWindow end
@@ -15,6 +16,52 @@ queue = EventQueue(wm)
 not_implemented_for(x) = ErrorException("Not implemented for $x")
 
 @testset "WindowAbstractions.jl" begin
+    @testset "Key symbols" begin
+        @testset "Construction" begin
+            key = KeySymbol(:p)
+            @test key.name == Symbol(key) == :p
+            @test key.description == 'p'
+            @test repr(key) == "KeySymbol(:p)"
+            key = KeySymbol(:P)
+            @test key.name == :P
+            @test key.description == 'P'
+            @test repr(key) == "KeySymbol(:P)"
+            key = KeySymbol(:alt_left)
+            @test key.name == :alt_left
+            @test key.description == "Alt (left)"
+            @test repr(key) == "KeySymbol(:alt_left, \"Alt (left)\")"
+            key = KeySymbol(:eurosign)
+            @test key.name == :eurosign
+            @test key.description == "eurosign"
+            key = KeySymbol(:eurosign, '€')
+            @test key.name == :eurosign
+            @test key.description == '€'
+            key = KeySymbol(:U20AC)
+            @test key.name == :U20AC
+            @test key.description == '€'
+        end
+
+        @testset "Construction from XKB" begin
+            conn = @ccall libxcb.xcb_connect(get(ENV, "DISPLAY", C_NULL)::Cstring, C_NULL::Ptr{Cint})::Ptr{Cvoid}
+            code = @ccall libxcb.xcb_connection_has_error(conn::Ptr{Cvoid})::Cint
+            @assert iszero(code) "XCB connection not successful (error code: $code)"
+            @test conn ≠ C_NULL
+            # Beware: the modifiers pressed during execution of this code will be encoded into the keymap state.
+            km = keymap_from_x11(conn)
+            @test all(≠(C_NULL), (km.handle, km.ctx, km.state))
+
+            input_key(key::Symbol) = KeySymbol(km, PhysicalKey(km, key))
+            @test input_key(:AC02) == KeySymbol(:s)
+            @test input_key(:KP1) == KeySymbol(:kp_end, "End (keypad)")
+            @test input_key(:SPCE) == KeySymbol(:space, ' ')
+
+            @test KeySymbol('c') == KeySymbol(:c)
+            @test KeySymbol('C') == KeySymbol(:C)
+            @test KeySymbol('$') == KeySymbol(:dollar, '$')
+            @test KeySymbol(']') == KeySymbol(:bracketright, ']')
+        end
+    end
+
     @testset "Key Combinations" begin
         @test key"ctrl+z" == KeyCombination(:z, CTRL_MODIFIER)
         @test key"alt+z" == KeyCombination(:z, MOD1_MODIFIER)

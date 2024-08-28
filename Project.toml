@@ -1,7 +1,7 @@
 name = "WindowAbstractions"
 uuid = "e18202ca-4a7d-4de8-b056-fa6bbd7de157"
-authors = ["Cédric Belmant"]
 version = "0.7.4"
+authors = ["Cédric Belmant"]
 
 [deps]
 BitMasks = "a3e06817-fd65-4797-8291-16f435bc2529"
@@ -21,6 +21,7 @@ julia = "1.9"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+Xorg_libxcb_jll = "c7cfdc94-dc32-55de-ac96-5a1b8d977c5b"
 
 [targets]
-test = ["Test", "XKeyboard"]
+test = ["Test", "XKeyboard", "Xorg_libxcb_jll"]
