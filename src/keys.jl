@@ -23,6 +23,9 @@ struct KeySymbol
     end
 end
 
+Base.:(==)(x::KeySymbol, y::KeySymbol) = x.name == y.name
+Base.hash(x::KeySymbol, h::UInt) = hash(x.name, hash(KeySymbol, h))
+
 Base.Symbol(key::KeySymbol) = key.name
 
 const key_descriptions = Dict(
@@ -132,15 +135,13 @@ function ModifierState(key::KeySymbol)
 end
 
 "Key binding associated to a character and a key modifier state."
-struct KeyCombination
+@struct_hash_equal struct KeyCombination
     key::KeySymbol
     exact_modifiers::ModifierState
     significant_modifiers::ModifierState
     KeyCombination(key::KeySymbol, exact_modifiers = NO_MODIFIERS, significant_modifiers = SHIFT_MODIFIER | CTRL_MODIFIER | MOD1_MODIFIER) = new(key, exact_modifiers, significant_modifiers)
 end
 KeyCombination(key, exact_modifiers = NO_MODIFIERS, significant_modifiers = SHIFT_MODIFIER | CTRL_MODIFIER | MOD1_MODIFIER) = KeyCombination(KeySymbol(key), exact_modifiers, significant_modifiers)
-
-Base.:(==)(x::KeyCombination, y::KeyCombination) = x.key == y.key && x.exact_modifiers == y.exact_modifiers && x.significant_modifiers == y.significant_modifiers
 
 function matches(kc::KeyCombination, key::KeySymbol, active_modifiers::ModifierState, consumed_modifiers::ModifierState)
     kc.key == key && kc.exact_modifiers == (active_modifiers & ~consumed_modifiers) & kc.significant_modifiers

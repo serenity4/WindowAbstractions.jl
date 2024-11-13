@@ -39,6 +39,9 @@ not_implemented_for(x) = ErrorException("Not implemented for $x")
             key = KeySymbol(:U20AC)
             @test key.name == :U20AC
             @test key.description == '€'
+            key = KeySymbol(:escape)
+            @test key == KeySymbol(:escape, '\e')
+            @test hash(key) == hash(KeySymbol(:escape, '\e'))
         end
 
         @testset "Construction from XKB" begin
@@ -76,6 +79,8 @@ not_implemented_for(x) = ErrorException("Not implemented for $x")
         @test matches(key"ctrl+z", KeySymbol(:z), CTRL_MODIFIER, NO_MODIFIERS)
         @test matches(key"ctrl+Z", KeySymbol(:Z), CTRL_MODIFIER | SHIFT_MODIFIER, SHIFT_MODIFIER)
         @test !matches(key"ctrl+Z", KeySymbol(:Z), CTRL_MODIFIER | SHIFT_MODIFIER, NO_MODIFIERS)
+        @test key"escape" == KeyCombination(:escape)
+        @test key"escape" == KeyCombination(KeySymbol(:escape, '\e'))
     end
 
     @testset "AbstractWindow Interface" begin

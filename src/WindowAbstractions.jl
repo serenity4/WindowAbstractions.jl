@@ -2,6 +2,7 @@ module WindowAbstractions
 
 using BitMasks: @bitmask, enabled_flags
 export enabled_flags
+using StructEquality
 
 using DocStringExtensions
 
