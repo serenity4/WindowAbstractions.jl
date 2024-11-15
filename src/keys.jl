@@ -22,6 +22,7 @@ struct KeySymbol
         new(name, description)
     end
 end
+KeySymbol(name, description = nothing) = KeySymbol(Symbol(name), description)
 
 Base.:(==)(x::KeySymbol, y::KeySymbol) = x.name == y.name
 Base.hash(x::KeySymbol, h::UInt) = hash(x.name, hash(KeySymbol, h))

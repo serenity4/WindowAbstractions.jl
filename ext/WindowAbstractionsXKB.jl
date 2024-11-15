@@ -2,7 +2,7 @@ module WindowAbstractionsXKB
 
 import WindowAbstractions: KeySymbol, EventType, KeyEvent, ModifierState, NO_MODIFIERS
 import XKeyboard: print_key_info
-using XKeyboard: Keymap, PhysicalKey, Keysym, xkb_state_key_get_consumed_mods, LibXKB
+using XKeyboard: Keymap, PhysicalKey, Keysym, xkb_state_key_get_consumed_mods2, LibXKB, XKB_CONSUMED_MODE_GTK
 
 "Translate a few names so that they are more friendly."
 const keysym_names_translation = Dict(
@@ -42,7 +42,7 @@ function KeyEvent(km::Keymap, key::PhysicalKey, modifiers::ModifierState = NO_MO
   KeyEvent(Symbol(km, key), KeySymbol(km, key), Char(km, key), modifiers, consumed_modifiers(km, key))
 end
 
-consumed_modifiers(km::Keymap, key::PhysicalKey) = ModifierState(xkb_state_key_get_consumed_mods(km.state, key.code))
+consumed_modifiers(km::Keymap, key::PhysicalKey) = ModifierState(xkb_state_key_get_consumed_mods2(km.state, key.code, XKB_CONSUMED_MODE_GTK))
 
 function print_key_info(io::IO, km::Keymap, event::KeyEvent)
   (; key_name, key, input) = event
