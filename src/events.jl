@@ -73,7 +73,7 @@ struct Event{W <: AbstractWindow}
     data::Any
     location::Tuple{Float64,Float64}
     time::Float64
-    win::W
+    window::W
 end
 
 function Base.getproperty(event::Event, name::Symbol)

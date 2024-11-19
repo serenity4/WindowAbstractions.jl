@@ -9,7 +9,7 @@ struct FakeWindowManager <: AbstractWindowManager end
 
 WindowAbstractions.window_type(::FakeWindowManager) = FakeWindow
 
-win = FakeWindow()
+window = FakeWindow()
 wm = FakeWindowManager()
 queue = EventQueue(wm)
 
@@ -84,15 +84,15 @@ not_implemented_for(x) = ErrorException("Not implemented for $x")
     end
 
     @testset "AbstractWindow Interface" begin
-        @test_throws not_implemented_for(win) extent(win)
-        @test_throws not_implemented_for(win) dpi(win)
-        @test_throws not_implemented_for(win) resize(win, (1, 1))
-        @test_throws not_implemented_for(win) map_window(win)
-        @test_throws not_implemented_for(win) unmap_window(win)
-        @test_throws not_implemented_for(win) set_title(win, "title")
-        @test_throws not_implemented_for(win) set_icon(win, nothing)
-        @test_throws not_implemented_for(win) set_icon_title(win, "icon_title")
-        @test_throws not_implemented_for(wm) close(wm, win)
+        @test_throws not_implemented_for(window) extent(window)
+        @test_throws not_implemented_for(window) dpi(window)
+        @test_throws not_implemented_for(window) resize(window, (1, 1))
+        @test_throws not_implemented_for(window) map_window(window)
+        @test_throws not_implemented_for(window) unmap_window(window)
+        @test_throws not_implemented_for(window) set_title(window, "title")
+        @test_throws not_implemented_for(window) set_icon(window, nothing)
+        @test_throws not_implemented_for(window) set_icon_title(window, "icon_title")
+    @test_throws not_implemented_for(wm) close(wm, window)
         @test_throws not_implemented_for(wm) get_window(wm, nothing)
         @test_throws not_implemented_for(queue) poll_for_events!(queue)
     end

@@ -3,44 +3,44 @@ Abstract window type.
 """
 abstract type AbstractWindow end
 
-Base.broadcastable(win::AbstractWindow) = Ref(win)
+Base.broadcastable(window::AbstractWindow) = Ref(window)
 
 """
 Window dimensions (width, height).
 """
-extent(win::AbstractWindow) = not_implemented_for(win)
+extent(window::AbstractWindow) = not_implemented_for(window)
 
 """
 Get window DPI.
 """
-dpi(win::AbstractWindow) = not_implemented_for(win)
+dpi(window::AbstractWindow) = not_implemented_for(window)
 
 """
 Resize the window with `extent` reflecting the new (width, height).
 """
-resize(win::AbstractWindow, extent) = not_implemented_for(win)
+resize(window::AbstractWindow, extent) = not_implemented_for(window)
 
 """
 Map a window to the screen.
 """
-map_window(win::AbstractWindow) = not_implemented_for(win)
+map_window(window::AbstractWindow) = not_implemented_for(window)
 
 """
 Unmap a window from the screen.
 """
-unmap_window(win::AbstractWindow) = not_implemented_for(win)
+unmap_window(window::AbstractWindow) = not_implemented_for(window)
 
 """
 Set window title.
 """
-set_title(win::AbstractWindow, title) = not_implemented_for(win)
+set_title(window::AbstractWindow, title) = not_implemented_for(window)
 
 """
 Set window icon.
 """
-set_icon(win::AbstractWindow, icon) = not_implemented_for(win)
+set_icon(window::AbstractWindow, icon) = not_implemented_for(window)
 
 """
 Set window icon title.
 """
-set_icon_title(win::AbstractWindow, icon_title) = not_implemented_for(win)
+set_icon_title(window::AbstractWindow, icon_title) = not_implemented_for(window)

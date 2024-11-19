@@ -13,7 +13,7 @@ Create a window.
 (::Type{<:AbstractWindow})(wm::AbstractWindowManager; kwargs...) = not_implemented_for(wm)
 
 """
-    close(wm::AbstractWindowManager, win::AbstractWindow)
+    close(wm::AbstractWindowManager, window::AbstractWindow)
 
 Close a window.
 """
