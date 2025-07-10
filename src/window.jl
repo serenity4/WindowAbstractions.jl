@@ -1,14 +1,13 @@
 """
 Abstract window type.
+
+Must hold the following properties:
+- `.position::Tuple{Int,Int}`: window position within its parent (x, y).
+- `.extent::Tuple{Int,Int}`: window dimensions (width, height).
 """
 abstract type AbstractWindow end
 
 Base.broadcastable(window::AbstractWindow) = Ref(window)
-
-"""
-Window dimensions (width, height).
-"""
-extent(window::AbstractWindow) = not_implemented_for(window)
 
 """
 Get window DPI.
@@ -18,7 +17,17 @@ dpi(window::AbstractWindow) = not_implemented_for(window)
 """
 Resize the window with `extent` reflecting the new (width, height).
 """
-resize(window::AbstractWindow, extent) = not_implemented_for(window)
+resize_window(window::AbstractWindow, extent; corner = nothing) = not_implemented_for(window)
+
+"""
+Move the window to `new_position`.
+"""
+move_window_to(window::AbstractWindow, position) = not_implemented_for(window)
+
+"""
+Move the window, relative to the current window position.
+"""
+move_window_by(window::AbstractWindow, offset) = move_window_to(window, window.position .+ offset)
 
 """
 Map a window to the screen.

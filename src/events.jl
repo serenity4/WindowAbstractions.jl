@@ -30,28 +30,30 @@ This type is defined as a bitmask, to make it easier to work with sets of events
     WINDOW_GAINED_FOCUS = 0x0100
     "The window lost focus."
     WINDOW_LOST_FOCUS   = 0x0200
-    "The window was resized."
-    WINDOW_RESIZED      = 0x0400
+    "The window moved."
+    WINDOW_MOVED        = 0x0400
+    "The window was resized (and may have had its origin moved)."
+    WINDOW_RESIZED      = 0x0800
     """
     A window was exposed to the screen; either right after creation, or when it was previously hidden and then visible again.
     """
-    WINDOW_EXPOSED      = 0x0800
+    WINDOW_EXPOSED      = 0x1000
     """
     The window was closed, e.g. manually by the user or by a programmatic action.
     """
-    WINDOW_CLOSED       = 0x1000
+    WINDOW_CLOSED       = 0x2000
     """
     The window is detected as invalid (for example, when closed externally).
 
     The conditions for tagging a window as invalid depend on the windowing API used. It is typically used to signal that a window crashed or does not exist, but for which an event was reported. It may however not possible to know exactly why or when a window becomes invalid. For example, the X11 protocol does not offer a way to check for window validity, since the window may get invalidated by the time the X server answer comes back.
     Windows that are tagged invalid should be terminated.
     """
-    WINDOW_INVALID      = 0x2000
+    WINDOW_INVALID      = 0x4000
 
     KEY_EVENT = KEY_PRESSED | KEY_RELEASED
     BUTTON_EVENT = BUTTON_PRESSED | BUTTON_RELEASED
     POINTER_EVENT = POINTER_ENTERED | POINTER_MOVED | POINTER_EXITED
-    WINDOW_EVENT = WINDOW_GAINED_FOCUS | WINDOW_LOST_FOCUS | WINDOW_RESIZED | WINDOW_EXPOSED | WINDOW_CLOSED | WINDOW_INVALID
+    WINDOW_EVENT = WINDOW_GAINED_FOCUS | WINDOW_LOST_FOCUS | WINDOW_MOVED | WINDOW_RESIZED | WINDOW_EXPOSED | WINDOW_CLOSED | WINDOW_INVALID
 
     ALL_EVENTS = KEY_EVENT | BUTTON_EVENT | POINTER_EVENT | WINDOW_EVENT
 end
@@ -59,14 +61,13 @@ end
 """
 Generic event structure identified by its type (see [`EventType`](@ref)) and which may hold data depending on the type of event.
 
-The type of `data` follows the association (with respect to the event type):
-- `KEY_PRESSED` or `KEY_RELEASED`: [`KeyEvent`](@ref), accessible with `event.key_event`
-- `BUTTON_PRESSED` or `BUTTON_RELEASED`: [`MouseEvent`](@ref), accessible with `event.mouse_event`
-- `POINTER_MOVED`: [`PointerState`](@ref), accessible with `event.pointer_state`
-- `WINDOW_RESIZED`: `Tuple{Float64,Float64}` # new dimensions, accessible with `event.new_dimensions`
-- `WINDOW_EXPOSED`: `Tuple{Float64,Float64}` # area to redraw, accessible with `event.area`
-- Other event types: `Nothing`
-
+The event may have the following properties, depending on its type:
+- `.key_event::KeyEvent`                | `KEY_PRESSED` or `KEY_RELEASED`
+- `.mouse_event::KeyEvent`              | `BUTTON_PRESSED` or `BUTTON_RELEASED`
+- `.pointer_state::PointerState`        | `POINTER_MOVED`
+- `.resize::Tuple{Int64,Int64}`         | `WINDOW_RESIZED`: indicates the difference in size with respect to the previous dimensions.
+- `.movement::Tuple{Int64,Int64}`       | `WINDOW_RESIZED` or `WINDOW_MOVED`: indicates how much the window moved along the `x` and `y` directions.
+- `.area::Tuple{Float64,Float64}`       | `WINDOW_EXPOSED`
 """
 struct Event{W <: AbstractWindow}
     type::EventType
@@ -80,7 +81,8 @@ function Base.getproperty(event::Event, name::Symbol)
     name === :key_event && return event.data::KeyEvent
     name === :mouse_event && return event.data::MouseEvent
     name === :pointer_state && return event.data::PointerState
-    name === :new_dimensions && return event.data::Tuple{Int64,Int64}
+    name === :resize && return (event.data::NTuple{4,Int64})[1:2]
+    name === :movement && return (event.data::Union{NTuple{2,Int64},NTuple{4,Int64}})[(end-1):end]
     name === :area && return event.data::Tuple{Float64,Float64}
     getfield(event, name)
 end

@@ -56,7 +56,9 @@ export
         # Windowing API functions
         extent,
         dpi,
-        resize,
+        resize_window,
+        move_window_to,
+        move_window_by,
         map_window,
         unmap_window,
         set_title,
