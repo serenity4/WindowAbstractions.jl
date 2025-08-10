@@ -81,6 +81,9 @@ not_implemented_for(x) = ErrorException("Not implemented for $x")
         @test !matches(key"ctrl+Z", KeySymbol(:Z), CTRL_MODIFIER | SHIFT_MODIFIER, NO_MODIFIERS)
         @test key"escape" == KeyCombination(:escape)
         @test key"escape" == KeyCombination(KeySymbol(:escape, '\e'))
+        @test string(key"ctrl+alt+z") == "key\"ctrl+alt+z\""
+        @test string(key"alt+ctrl+z") == "key\"ctrl+alt+z\""
+        @test string(key"escape") == "key\"escape\""
     end
 
     @testset "AbstractWindow Interface" begin

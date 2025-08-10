@@ -22,3 +22,17 @@ Construct a KeyCombination instance from a string as `"[<state_1>+[...<state_n>+
 The string must be a list of elements separated by '+' characters, with only one key symbol at the end. For example, `"k"`, `"alt+k"` and `"ctrl+alt+shift+f11"` are valid strings, but `"k+a"` is not. Casing is significant, as `z` and `Z` are different key symbols. For modifier strings, the casing should be lowercase, or will be forcefully converted into a lowercase string (reducing performance).
 """
 macro key_str(expr) esc(:($(KeyCombination(Meta.parse("\"$(escape_string(expr))\""))))) end
+
+function Base.show(io::IO, key::KeyCombination)
+    print(io, "key", '"')
+    first = true
+    for modifier in enabled_flags(key.exact_modifiers)
+        iszero(modifier) && continue
+        !first && print(io, '+')
+        print(io, modifier_names_short_inv[modifier])
+        first = false
+    end
+    !first && print(io, '+')
+    print(io, key.key.name)
+    print(io, '"')
+end

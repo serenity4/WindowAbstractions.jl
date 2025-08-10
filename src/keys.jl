@@ -116,6 +116,8 @@ const modifier_names_short = Dict(
     :alt_gr => MOD5_MODIFIER,
 )
 
+const modifier_names_short_inv = Dict(value => key for (key, value) in pairs(modifier_names_short))
+
 function ModifierState(name::Symbol)
     ret = @something(get(modifier_names_short, name, nothing), get(modifier_names_short, Symbol(lowercase(String(name))), Some(nothing)))
     isnothing(ret) && throw(ArgumentError("Name `$name` is not a known modifier name."))
